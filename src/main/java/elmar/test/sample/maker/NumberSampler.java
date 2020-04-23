@@ -75,6 +75,8 @@ class Exp {
     }
     List<Exp> choices = new ArrayList<Exp>();
 	Exp parent;
+    public String proportionExp;
+    public String label; 
     @Override
     public String toString() {
         return "Exp [exp=" + exp + ", choices=" + choices + "]";
