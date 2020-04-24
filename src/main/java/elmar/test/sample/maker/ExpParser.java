@@ -1,47 +1,53 @@
 package elmar.test.sample.maker;
 
-import java.util.Stack;
-
 public class ExpParser {
-    private static final int START = -1;
-    private Stack<Integer> statuses = new Stack<>();
-    private Stack<Exp> results = new Stack<>();
-    private String input;
-    private int inputIndex;
-    
-    public Exp parse(String line) {
-        String[] parts = line.split(":", 2);
-        parseLabelAndPercile(parts[0]);
-        if(parts.length>1) parseExp(parts[1].trim());
-        
-       
-        return null;
+    String line;
+
+    public void parse() {
+
     }
 
-    private void parseExp(String line) {
-        statuses.push(START);
-        if(line.charAt(0)=='[') {
-            parseSelect();
+}
+
+class LabelParser {
+    public void consume(char c, ParseContext context) {
+
+    }
+}
+
+class WordParser {
+    private static final int FAIL = 0;
+    private static final int DONE = 1;
+    private static final int CONTINUE = 2;
+
+    StringBuffer result = new StringBuffer();
+
+    public int consume(char c, ParseContext context) {
+
+        boolean error = false;
+        boolean valid = Character.isJavaIdentifierStart(c)
+                || (result.length() > 0 && Character.isJavaIdentifierPart(c));
+        if (valid) {
+            result.append(c);
+        } else {
+            error = !Character.isWhitespace(c);
         }
+        if (error)
+            return FAIL;
+        return result.length() > 0 ? CONTINUE | DONE : CONTINUE;
+    }
+}
+
+class ParseContext {
+    private String source;
+    private int pos = -1;
+
+    public char nextChar() {
+        return source.charAt(++pos);
     }
 
-    private void parseSelect() {
-        
+    public void rewind() {
+        pos--;
     }
 
-    private void parseLabelAndPercile(String label) {
-        String[] parts = label.split("~");
-        getCurrentExp().label = parts[0].trim(); 
-        getCurrentExp().proportionExp = parts[1].trim();
-    }
-
-    private Exp getCurrentExp() {
-        return results.peek();
-    }
-
-
-    public static void main(String[] args) {
-        System.out.println(":aaa".split(":")[0]+">");
-    }
-    
 }
