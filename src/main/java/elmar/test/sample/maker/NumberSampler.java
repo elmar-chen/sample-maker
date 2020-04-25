@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,7 +14,9 @@ public class NumberSampler {
 	int DEFAULT_NUM_SPACE_AS_TAB = 4;
 	public static void main(String[] args) throws IOException {
 
-		InputStream is = ClassLoader.getSystemResourceAsStream("lang.def");
+	    Pattern.matches("a[a-z]+@\\.com", "abc@.com");
+	    
+	    InputStream is = ClassLoader.getSystemResourceAsStream("lang.def");
 		new NumberSampler().parse(is);
 
 	}
