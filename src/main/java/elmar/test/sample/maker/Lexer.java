@@ -1,10 +1,6 @@
 package elmar.test.sample.maker;
 
 public abstract class Lexer implements Parser {
-    private static final int FAIL = 0;
-    private static final int DONE = 1;
-    private static final int CONTINUE = 2;
-
 
     StringBuffer buff = new StringBuffer();
 

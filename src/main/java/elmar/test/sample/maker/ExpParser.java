@@ -6,31 +6,9 @@ public class ExpParser {
     public void parse() {
 
     }
-
-}
-
-class LabelParser {
-    public void consume(char c, ParseContext context) {
-
+    public RecursiveParser build(){
+        RecursiveParser.start();
+        return null;
     }
 }
 
-class ParseContext {
-    private String source;
-    private int pos = -1;
-
-    public char nextChar() {
-        return source.charAt(++pos);
-    }
-
-    public void rewind() {
-        pos--;
-    }
-
-    public void putLexerResult(StringBuffer buff) {
-        
-    }
-
-    public void fail() {
-    }
-}

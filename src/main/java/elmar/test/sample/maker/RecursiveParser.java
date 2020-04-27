@@ -3,9 +3,15 @@ package elmar.test.sample.maker;
 import java.util.List;
 import java.util.Stack;
 
-public abstract class RecursiveParser {
-    
-    abstract List<RecursiveParser> getChoice();
+public class RecursiveParser {
+
+    public static RecursiveParser start() {
+        return new RecursiveParser();
+    }
+
+    List<RecursiveParser> getChoice(){
+        return null;
+    }
     
     Stack<Object[]> results = new Stack<Object[]>();
     public Object parse() {
