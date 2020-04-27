@@ -27,4 +27,10 @@ class ParseContext {
         pos--;
     }
 
+    public void putLexerResult(StringBuffer buff) {
+        
+    }
+
+    public void fail() {
+    }
 }
