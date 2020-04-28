@@ -1,26 +1,35 @@
 package elmar.test.sample.maker;
 
-import java.util.List;
-import java.util.Stack;
+public class RecursiveParser implements Parser{
 
-public class RecursiveParser {
+    private final ChildrenGroupType type;
 
-    public static RecursiveParser start() {
-        return new RecursiveParser();
+    public RecursiveParser(ChildrenGroupType type) {
+        this.type = type;
     }
 
-    List<RecursiveParser> getChoice(){
+    public static RecursiveParser startChoices() {
+        return new RecursiveParser(ChildrenGroupType.CHOOSE);
+    }
+
+    public static RecursiveParser startSequence() {
+        return new RecursiveParser(ChildrenGroupType.SEQUENCE);
+    }
+
+    public static RecursiveParser pair(RecursiveParser left, RecursiveParser right, RecursiveParser pad){
         return null;
     }
-    
-    Stack<Object[]> results = new Stack<Object[]>();
-    public Object parse() {
-        for (RecursiveParser chioce : getChoice()) {
-            
-        }
-        return null;
+    public RecursiveParser add(Parser parser, Repeat repeat) {
+        return this;
     }
-    class ParseContext {
-        
+
+    @Override
+    public void parse(ParseContext context) {
+
     }
+
+    public static enum ChildrenGroupType {
+        CHOOSE, SEQUENCE
+    }
+
 }

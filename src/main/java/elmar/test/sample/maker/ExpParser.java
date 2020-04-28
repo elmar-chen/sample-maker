@@ -7,8 +7,12 @@ public class ExpParser {
 
     }
     public RecursiveParser build(){
-        RecursiveParser.start();
-        return null;
+        RecursiveParser quotationPart = RecursiveParser.startSequence()
+                .add(new RegExpLexer("~"), Repeat.EXACTLY_ONE)
+                .add(new QuotationParser(), Repeat.EXACTLY_ONE);
+
+
+        return RecursiveParser.startSequence().add(new NameParser(), Repeat.ZERO_OR_ONE).add(quotationPart, Repeat.ZERO_OR_ONE);
     }
 }
 
