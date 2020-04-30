@@ -1,4 +1,4 @@
-package elmar.test.sample.maker;
+package elmar.test.sample.maker.parser;
 
 public class RegExpLexer extends Lexer{
     private String regex;

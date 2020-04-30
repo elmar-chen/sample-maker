@@ -1,6 +1,6 @@
-package elmar.test.sample.maker;
+package elmar.test.sample.maker.parser;
 
-public class NameParser extends Lexer {
+public class NameLexer extends Lexer {
 
     @Override
     protected boolean isValid(CharSequence previous, char c) {

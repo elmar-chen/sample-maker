@@ -1,4 +1,6 @@
-package elmar.test.sample.maker;
+package elmar.test.sample.maker.parser;
+
+import elmar.test.sample.maker.ParseContext;
 
 public abstract class Lexer implements Parser {
 
