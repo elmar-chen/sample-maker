@@ -1,15 +1,25 @@
 package elmar.test.sample.maker;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class ParseContext {
-    private String source;
+
+    private BufferedReader source;
+    private StringBuilder buff = new StringBuilder();
     private int pos = -1;
 
-    public char nextChar() {
-        return source.charAt(++pos);
+    public ParseContext(InputStream src) {
+        source = new BufferedReader(new InputStreamReader(src));
+
     }
 
-    public void rewind() {
-        pos--;
+    public char nextChar() throws IOException {
+        char[] buff = new char[1];
+        int n = source.read(buff);
+        return n>0 ? buff[0] : (char) -1;
     }
 
     public void putLexerResult(StringBuffer buff) {

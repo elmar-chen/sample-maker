@@ -3,7 +3,7 @@ package elmar.test.sample.maker.parser;
 import elmar.test.sample.maker.parser.composite.Repeat;
 import elmar.test.sample.maker.parser.composite.SequenceParser;
 
-public class StatementParserBuilder implements ParserBuilder {
+public class StatementParserBuilder extends ParserBuilder {
 
     public Parser build(){
 

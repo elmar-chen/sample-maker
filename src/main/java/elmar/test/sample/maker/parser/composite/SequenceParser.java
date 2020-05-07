@@ -14,10 +14,22 @@ public class SequenceParser implements Parser {
         return new SequenceParser();
     }
 
+    public static SequenceParser with(Parser... parsers) {
+        SequenceParser sequenceParser = start();
+        for (Parser parser: parsers) {
+            sequenceParser.add(parser);
+        }
+        return sequenceParser;
+    }
+
     public SequenceParser add(Parser parser, Repeat repeat) {
         children.add(RepeatParser.build(parser, repeat));
         return this;
     }
+    public SequenceParser add(Parser parser) {
+        return this.add(parser, Repeat.EXACTLY_ONE);
+    }
+
 
     @Override
     public void parse(ParseContext context) {
