@@ -13,13 +13,9 @@ public class RepeatParser implements Parser {
         this.repeat = repeat;
     }
 
-    public static RepeatParser build(Parser parser, Repeat repeat) {
-        return new RepeatParser(parser, repeat);
-    }
-
     @Override
     public void parse(ParseContext context) {
-
+        context.pushParser(this);
     }
 
 }

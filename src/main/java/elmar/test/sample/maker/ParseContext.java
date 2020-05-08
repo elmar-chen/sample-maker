@@ -1,5 +1,7 @@
 package elmar.test.sample.maker;
 
+import elmar.test.sample.maker.parser.composite.RepeatParser;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,5 +29,8 @@ public class ParseContext {
     }
 
     public void fail() {
+    }
+
+    public void pushParser(RepeatParser repeatParser) {
     }
 }

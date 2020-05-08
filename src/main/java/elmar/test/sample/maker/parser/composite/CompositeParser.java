@@ -6,20 +6,11 @@ import elmar.test.sample.maker.parser.Parser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SequenceParser implements Parser {
+public class CompositeParser implements Parser {
 
     private List<Parser> children = new ArrayList<>();
 
-    public static SequenceParser startChoices() {
-        return new SequenceParser();
-    }
-
-    public static SequenceParser start() {
-        return new SequenceParser();
-    }
-
-
-    public SequenceParser add(Parser parser) {
+    public CompositeParser addChild(Parser parser) {
         children.add(parser);
         return this;
     }
@@ -29,8 +20,5 @@ public class SequenceParser implements Parser {
 
     }
 
-    public static enum ChildrenGroupType {
-        CHOOSE, SEQUENCE
-    }
 
 }
