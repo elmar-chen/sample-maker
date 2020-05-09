@@ -23,6 +23,14 @@ public class SequenceParser implements Parser {
         children.add(parser);
         return this;
     }
+    public SequenceParser addOptional(Parser parser) {
+        children.add(ParserBuilder.repeat(parser, Repeat.ZERO_OR_ONE));
+        return this;
+    }
+    public SequenceParser repeat(Parser parser, Repeat repeat) {
+        children.add(ParserBuilder.repeat(parser, repeat));
+        return this;
+    }
 
     @Override
     public void parse(ParseContext context) {

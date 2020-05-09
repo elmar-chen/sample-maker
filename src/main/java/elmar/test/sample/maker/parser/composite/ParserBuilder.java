@@ -3,9 +3,6 @@ package elmar.test.sample.maker.parser.composite;
 import elmar.test.sample.maker.ParseContext;
 import elmar.test.sample.maker.parser.Parser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class ParserBuilder implements Parser {
 
     public static SequenceParser sequence(Parser... parsers) {
@@ -26,4 +23,11 @@ public abstract class ParserBuilder implements Parser {
     public static RepeatParser repeat(Parser parser, Repeat repeat) {
         return new RepeatParser(parser, repeat);
     }
+    
+    @Override
+    public void parse(ParseContext context) {
+            build().parse(context);
+    }
+
+    public abstract Parser build();
 }
