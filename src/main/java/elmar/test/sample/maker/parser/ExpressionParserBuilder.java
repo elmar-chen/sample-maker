@@ -40,6 +40,6 @@ public class ExpressionParserBuilder extends ParserBuilder {
     }
 
     @Override
-    public void parse(ParseContext context) {
+    public boolean parse(ParseContext context) {
     }
 }

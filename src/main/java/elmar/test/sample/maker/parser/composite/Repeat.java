@@ -10,6 +10,14 @@ public class Repeat {
     private final int min;
     private final int max;
 
+    
+    public int getMax() {
+        return max;
+    }
+    public int getMin() {
+        return min;
+    }
+    
     public Repeat(int min, int max) {
         this.max = max;
         this.min = min;

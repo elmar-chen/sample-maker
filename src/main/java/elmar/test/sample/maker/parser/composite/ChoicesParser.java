@@ -25,7 +25,7 @@ public class ChoicesParser implements Parser {
     }
 
     @Override
-    public void parse(ParseContext context) {
+    public boolean parse(ParseContext context) {
 
     }
 

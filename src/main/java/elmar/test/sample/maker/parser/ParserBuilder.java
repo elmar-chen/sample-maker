@@ -6,7 +6,7 @@ public abstract class ParserBuilder implements Parser{
     public abstract Parser build();
 
     @Override
-    public void parse(ParseContext context) {
+    public boolean parse(ParseContext context) {
         build().parse(context);
     }
 }

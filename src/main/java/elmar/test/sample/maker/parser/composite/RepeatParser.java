@@ -7,6 +7,7 @@ public class RepeatParser implements Parser {
 
     private final Repeat repeat;
     private Parser parser;
+    private int successCount = 0;
 
     public RepeatParser(Parser parser, Repeat repeat) {
         this.parser = parser;
@@ -14,8 +15,14 @@ public class RepeatParser implements Parser {
     }
 
     @Override
-    public void parse(ParseContext context) {
-        context.pushParser(this);
+    public boolean parse(ParseContext context) {
+        boolean success = parser.parse(context);
+        if (success) {
+            successCount++;
+            return true;
+        } else {
+            return successCount >= repeat.getMin() && successCount <= repeat.getMax();
+        }
     }
 
 }

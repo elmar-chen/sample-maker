@@ -7,7 +7,7 @@ public abstract class Lexer implements Parser {
     StringBuffer buff = new StringBuffer();
 
     @Override
-    public void parse(ParseContext context) {
+    public boolean parse(ParseContext context) {
     }
 
     protected abstract boolean isValid(CharSequence previous, char c);
