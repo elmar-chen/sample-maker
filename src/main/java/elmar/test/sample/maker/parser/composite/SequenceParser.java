@@ -1,6 +1,7 @@
 package elmar.test.sample.maker.parser.composite;
 
 import elmar.test.sample.maker.ParseContext;
+import elmar.test.sample.maker.parser.Lexer;
 import elmar.test.sample.maker.parser.Parser;
 
 import java.util.ArrayList;
@@ -27,14 +28,20 @@ public class SequenceParser implements Parser {
         children.add(ParserBuilder.repeat(parser, Repeat.ZERO_OR_ONE));
         return this;
     }
-    public SequenceParser repeat(Parser parser, Repeat repeat) {
-        children.add(ParserBuilder.repeat(parser, repeat));
+    public SequenceParser repeat(Parser parser, Lexer pad, Repeat repeat) {
+        SequenceParser seq = new SequenceParser();
+        
         return this;
     }
+    
+ 
 
+    
+    
+    
     @Override
     public boolean parse(ParseContext context) {
-
+        return false;
     }
 
     public static enum ChildrenGroupType {

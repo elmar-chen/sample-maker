@@ -19,8 +19,11 @@ public abstract class ParserBuilder implements Parser{
         
     }
     public static void main(String[] args) {
-        ParserBuilder builder = ParserBuilder.createFor(Statement[].class);
-        builder.
+        GrammarNode<Statement> stat = new GrammarNode<>();
+        stat.addTrans("endl");
+        stat.addTrans("end");
+        
+        
     }
 
     private static ParserBuilder createFor(Class<Statement[]> class1) {
