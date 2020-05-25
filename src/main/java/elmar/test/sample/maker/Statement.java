@@ -2,9 +2,6 @@ package elmar.test.sample.maker;
 
 import com.sun.istack.internal.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Statement {
 
 	public int getLevel(@RegExp("\\s*") String src){

@@ -1,12 +1,12 @@
 package elmar.test.sample.maker.parser.composite;
 
-import elmar.test.sample.maker.ParseContext;
-import elmar.test.sample.maker.parser.Parser;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChoicesParser implements Parser {
+import elmar.test.sample.maker.ParseContext;
+import elmar.test.sample.maker.parser.Parser;
+
+public class ChoicesParser extends Parser {
 
     private List<Parser> children = new ArrayList<>();
 
@@ -26,6 +26,7 @@ public class ChoicesParser implements Parser {
 
     @Override
     public boolean parse(ParseContext context) {
+        return false;
 
     }
 

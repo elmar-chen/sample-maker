@@ -1,7 +1,5 @@
 package elmar.test.sample.maker.parser;
 
-import elmar.test.sample.maker.ParseContext;
-
-public interface Parser {
-    boolean parse(ParseContext context);
+public abstract class Parser<T> {
+    protected Class<T> target;
 }

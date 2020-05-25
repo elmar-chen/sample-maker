@@ -1,10 +1,14 @@
 package elmar.test.sample.maker.parser;
 
+import java.util.List;
+
 public class GrammarNode<T> {
     Class<T> result;
 
-    public void addTrans(String string) {
-        // TODO Auto-generated method stub
+    boolean multiple;
+    
+    Lexer pad;
         
-    }
+    List<GrammarNode<?>> children;
+    
 }

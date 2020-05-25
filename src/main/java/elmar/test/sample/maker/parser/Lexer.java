@@ -2,14 +2,11 @@ package elmar.test.sample.maker.parser;
 
 import elmar.test.sample.maker.ParseContext;
 
-public abstract class Lexer implements Parser {
+public abstract class Lexer extends Parser {
 
     StringBuffer buff = new StringBuffer();
 
-    @Override
-    public boolean parse(ParseContext context) {
-    }
-
+  
     protected abstract boolean isValid(CharSequence previous, char c);
 }
 
