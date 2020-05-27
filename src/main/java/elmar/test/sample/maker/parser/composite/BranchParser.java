@@ -5,12 +5,11 @@ import java.util.List;
 
 import elmar.test.sample.maker.parser.Parser;
 
-public class SequenceParser<T> extends Parser<T> {
+public class BranchParser<T> extends Parser<T> {
 
-    private List<Parser<?>> children = new ArrayList<>();
+    private List<Parser<? extends T>> children = new ArrayList<>();
 
-    public List<Parser<?>> getChildren() {
+    public List<Parser<? extends T>> getChildren() {
         return children;
     }
-
 }
