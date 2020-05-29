@@ -22,7 +22,13 @@ public class Repeat {
         this.max = max;
         this.min = min;
     }
+    
+    
 
+    public Repeat() {
+        this(1, Integer.MAX_VALUE);
+    }
+    
     public static Repeat exact(int amount) {
         return new Repeat(amount, amount);
     }

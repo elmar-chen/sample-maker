@@ -3,18 +3,49 @@ package elmar.test.sample.maker;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-import elmar.test.sample.maker.parser.Parser;
-import elmar.test.sample.maker.parser.ParserBuilder;
 import elmar.test.sample.maker.parser.RegExpLexer;
 import elmar.test.sample.maker.parser.composite.Repeat;
 import elmar.test.sample.maker.parser.composite.RepeatParser;
+import elmar.test.sample.maker.parser.composite.SequenceParser;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         Pattern compile = Pattern.compile("[1-9]");
         System.out.println(compile);
         
-        ParserBuilder.createFor(Statement.class).repeat().atLeast(1).padsWith(new RegExpLexer("\\r\\n|\\n"), PadPolicy.TAIL_OPTIONAL);
+        RepeatParser<Statement> root = new RepeatParser<>(Statement.class);
+        root.setRepeat(Repeat.atLeast(1));
+        root.padsWith(new RegExpLexer("\\r\\n|\\n"), PadPolicy.TAIL_OPTIONAL);
+        
+        
+        SequenceParser<Statement> stat = new SequenceParser<>(Statement.class);
+        
+        
+        stat.addLexer(Statement::setLevel, new RegExpLexer("\\s*"), text->{
+            return 1;
+        });
+        
+        SequenceParser<Void> leftPart = new SequenceParser<>(Void.class);
+        leftPart.addLexer(Statement::setName, new RegExpLexer("[a-zA-Z0-9]+"));
+        leftPart.addPad(new RegExpLexer("~"));
+        leftPart.add(Quotation.class);
+        
+        
+        stat.add(leftPart);
+        stat.addPad(new RegExpLexer(":"));
+        stat.add(Expression.class);
+        
+        
+        RepeatParser<Expression> expression = new RepeatParser<Expression>(Expression.class);
+        expression.setRepeat(Repeat.atLeast(1));
+        
+        
+        
+        
+        
+//        stat.addParser(Label.class);
+//        stat.addParse(Lab);
+       
         
 //        Parser root = RepeatParser.create(Statement.class, Repeat.ONE_OR_MORE).padsWith(new RegExpLexer("\\r\\n|\\n"));
         

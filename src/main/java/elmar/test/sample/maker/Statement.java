@@ -1,24 +1,52 @@
 package elmar.test.sample.maker;
 
-import com.sun.istack.internal.Nullable;
+import java.util.List;
 
 public class Statement {
 
-	public int getLevel(@RegExp("\\s*") String src){
-	    int numOfChar = 0;
-	    int numOfTab = 0;
-	    for(int i=0;i<src.length();i++){
-	        if(src.charAt(i)==' '){
-	            numOfChar++;
-            }
-            if(src.charAt(i)=='\t'){
-                numOfTab++;
-            }
-        }
-	    return numOfChar/4+numOfTab;
+    
+	private int level;
+	
+	private String name;
+	
+	private Quotation quotation;
+	
+	private List<Expression> expressions;
+	
+
+    public int getLevel() {
+        return level;
     }
 
-    private Quotation quotation;
-	@Nullable @PaddingBefore(":")
-	private Expression expression;
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Quotation getQuotation() {
+        return quotation;
+    }
+
+    public void setQuotation(Quotation quotation) {
+        this.quotation = quotation;
+    }
+
+    public List<Expression> getExpressions() {
+        return expressions;
+    }
+
+    public void setExpressions(List<Expression> expressions) {
+        this.expressions = expressions;
+    }
+
+
+
+	
 }

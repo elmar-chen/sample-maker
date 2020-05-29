@@ -4,7 +4,6 @@ public class Parser<T> {
     
     protected Class<T> target;
     
-    
-    
+
    
 }

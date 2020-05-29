@@ -1,5 +1,5 @@
 package elmar.test.sample.maker;
 
-public class Expression {
-
+public abstract class Expression {
+    Enumeration eumeration;
 }
