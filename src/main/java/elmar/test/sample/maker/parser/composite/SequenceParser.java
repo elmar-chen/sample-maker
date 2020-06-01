@@ -6,6 +6,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import elmar.test.sample.maker.Quotation;
+import elmar.test.sample.maker.parser.Lexer;
 import elmar.test.sample.maker.parser.Parser;
 import elmar.test.sample.maker.parser.RegExpLexer;
 
@@ -43,6 +44,11 @@ public class SequenceParser<T> extends Parser<T> {
     }
 
     public void add(Parser<?> parer) {
+        
+    }
+
+    public void setWrapper(Lexer before, Lexer after) {
+        // TODO Auto-generated method stub
         
     }
     

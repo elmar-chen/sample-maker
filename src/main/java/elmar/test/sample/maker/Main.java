@@ -9,6 +9,9 @@ import elmar.test.sample.maker.parser.composite.RepeatParser;
 import elmar.test.sample.maker.parser.composite.SequenceParser;
 
 public class Main {
+    public static final String REGEXP_ID = "";
+    public static final String WHITE_SPACES = "\\s*";
+    
     public static void main(String[] args) throws IOException {
         Pattern compile = Pattern.compile("[1-9]");
         System.out.println(compile);
@@ -21,9 +24,7 @@ public class Main {
         SequenceParser<Statement> stat = new SequenceParser<>(Statement.class);
         
         
-        stat.addLexer(Statement::setLevel, new RegExpLexer("\\s*"), text->{
-            return 1;
-        });
+        
         
         SequenceParser<Void> leftPart = new SequenceParser<>(Void.class);
         leftPart.addLexer(Statement::setName, new RegExpLexer("[a-zA-Z0-9]+"));
@@ -41,6 +42,8 @@ public class Main {
         
         
         
+        SequenceParser<Distribution> distr = new SequenceParser<>(Distribution.class);
+        distr.setWrapper(new RegExpLexer("{"), new RegExpLexer("}"));
         
         
 //        stat.addParser(Label.class);
