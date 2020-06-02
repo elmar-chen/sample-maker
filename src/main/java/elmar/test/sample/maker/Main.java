@@ -18,7 +18,7 @@ public class Main {
         
         RepeatParser<Statement> root = new RepeatParser<>(Statement.class);
         root.setRepeat(Repeat.atLeast(1));
-        root.padsWith(new RegExpLexer("\\r\\n|\\n"), PadPolicy.TAIL_OPTIONAL);
+//        root.padsWith(new RegExpLexer("\\r\\n|\\n"), PadPolicy.TAIL_OPTIONAL);
         
         
         SequenceParser<Statement> stat = new SequenceParser<>(Statement.class);
@@ -56,5 +56,7 @@ public class Main {
 //        String content = IOUtils.resourceToString("lang.def", Charset.forName("utf-8"));
 //        ParseContext context = new ParseContext(content);
 //        parser.parse(context);
+        
+        
     }
 }
