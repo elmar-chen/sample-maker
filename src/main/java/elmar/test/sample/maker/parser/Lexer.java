@@ -2,10 +2,9 @@ package elmar.test.sample.maker.parser;
 
 import elmar.test.sample.maker.ParseContext;
 
-public abstract class Lexer<T> {
+public interface Lexer<T> {
 
-    StringBuffer buff = new StringBuffer();
 
-    protected abstract T extract(ParseContext context);
+    public abstract T extract(ParseContext context);
 
 }

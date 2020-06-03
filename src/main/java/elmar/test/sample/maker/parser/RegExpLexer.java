@@ -1,15 +1,16 @@
 package elmar.test.sample.maker.parser;
 
-public class RegExpLexer extends Lexer{
-    private String regex;
+import elmar.test.sample.maker.ParseContext;
 
-    public RegExpLexer(String regex) {
-        this.regex = regex;
-    }
+public class RegExpLexer implements Lexer<String> {
+	private String pattern;
 
-    @Override
-    protected boolean isValid(CharSequence previous, char c) {
-        String str = previous.toString()+c;
-        return str.matches(regex);
-    }
+	public RegExpLexer(String regex) {
+		this.pattern = regex;
+	}
+
+	@Override
+	public String extract(ParseContext context) {
+		return context.readRegExp(pattern);
+	}
 }

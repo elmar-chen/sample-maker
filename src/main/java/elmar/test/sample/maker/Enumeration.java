@@ -7,30 +7,50 @@ import lombok.Data;
 
 public abstract class Enumeration {
 
-    @Data
-    @Pattern("(expression)")
-    public static class QuotatedExpression extends Enumeration {
-        Expression expression;
-    }
+	@Data
+	@Pattern("(expression)")
+	public static class QuotatedExpression extends Enumeration {
+		Expression expression;
+	}
 
-    @Data
-    @Pattern("[tokens]")
-    public static class MultiTokenEnumeration extends Enumeration {
-        List<EnumerationToken> tokens;
-    }
+	@Data
+	@Pattern("[tokens]")
+	public static class MultiTokenEnumeration extends Enumeration {
+		List<EnumerationToken> tokens;
+	}
 
-    @Data
-    @Pattern("start-end")
-    public static class EnumerationToken extends Enumeration {
-        
-        @RegExp()
-        private String start;
+	@Data
+	@Pattern("start - end")
+	public static class EnumerationToken extends Enumeration {
 
-        private String end;
-        
-    }
+		@RegExp(imp = EnumerationTokenLexer.class)
+		private String start;
 
-    public static class EnumerationTokenLexer extends Lexer{
-        
-    }
+		@RegExp(imp = EnumerationTokenLexer.class)
+		private String end;
+
+	}
+
+	public static class EnumerationTokenLexer implements Lexer<Character> {
+
+		@Override
+		public Character extract(ParseContext context) {
+			String text = null;
+			if ((text = context.readRegExpAndReplace("\\u([0-9]{4})", "$1")) != null) {
+				int code = Integer.parseInt(text.substring(2), 16);
+				return new Character((char) code);
+			}
+			if ((text = context.readRegExpAndReplace("\\(.)", "$1")) != null) {
+				return text.charAt(0);
+			}
+			char c = context.readChar();
+			if ("-[]".indexOf(c) < 0) {
+				return c;
+			} else {
+				context.unread(1);
+				return null;
+			}
+		}
+
+	}
 }
