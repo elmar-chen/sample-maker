@@ -2,6 +2,9 @@ package elmar.test.sample.maker;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import elmar.test.sample.maker.PadPolicy.PadBefore;
 import lombok.Data;
 
 @Data
@@ -13,11 +16,17 @@ public class Statement {
     @RegExp(ref = Main.WHITE_SPACES)
     private int level;
 
+    @Nullable
     @RegExp(ref = Main.REGEXP_ID)
     private String name;
-
+    
+    @Nullable
+    @PadBefore()
     private Quotation quotation;
-
+    
+    
+    @PadBefore(PadPolicy.ALWAYS)
+    @Repeats(min = 0)
     private List<Expression> expressions;
 
     
@@ -30,7 +39,6 @@ public class Statement {
             if(c==' ') numOfSpace ++;
             if(c=='\t') numOfTab ++;
         }
-   
         return numOfTab + numOfSpace/numOfSpaceAsOneIdent; 
     }
     
