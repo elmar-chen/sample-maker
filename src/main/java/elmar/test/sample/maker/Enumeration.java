@@ -2,6 +2,7 @@ package elmar.test.sample.maker;
 
 import java.util.List;
 
+import elmar.test.sample.maker.PadPolicy.PadBefore;
 import elmar.test.sample.maker.parser.Lexer;
 import lombok.Data;
 
@@ -24,8 +25,11 @@ public abstract class Enumeration {
 	public static class EnumerationToken extends Enumeration {
 
 		@RegExp(imp = EnumerationTokenLexer.class)
+		@AtLeastOne
 		private String start;
-
+		
+	    @AtLeastOne 
+	    @PadBefore(PadPolicy.ALWAYS)
 		@RegExp(imp = EnumerationTokenLexer.class)
 		private String end;
 
