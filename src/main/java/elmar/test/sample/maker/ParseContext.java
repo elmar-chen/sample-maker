@@ -1,7 +1,9 @@
 package elmar.test.sample.maker;
 
+import java.lang.reflect.AnnotatedElement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,14 +13,18 @@ public class ParseContext {
 	private String content;
 
 	Map<String, Object> variables = new HashMap<String, Object>();
+    private Stack<AnnotatedElement> parseStatck; 
 
 	public ParseContext(String content) {
 		this.content = content;
-
+		
 	}
-
-	public void putLexerResult(StringBuffer buff) {
-
+	
+	public AnnotatedElement getCurrentParseElement() {
+	    if(!parseStatck.isEmpty()) {
+	        return parseStatck.peek();
+	    }
+	    return null;
 	}
 
 	public int getInt(String identNumOfSpace, int def) {
@@ -57,6 +63,16 @@ public class ParseContext {
 	public void unread(int amount) {
 		pos -= amount;
 	}
+
+ 
+    public void pushParseElemet(AnnotatedElement element) {
+        parseStatck.add(element);
+    }
+
+
+    public AnnotatedElement popParseElement() {
+        return parseStatck.pop();
+    }
 
  
 }

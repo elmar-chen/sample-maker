@@ -4,7 +4,7 @@ public class Quotation {
     
     private int number;
     
-    @RegExp("[%]")
+    @Lex("[%]")
     private String type;
 
     public int getNumber() {

@@ -13,11 +13,11 @@ public class Statement {
 
     private static final String IDENT_NUM_OF_SPACE = "IDENT_NUM_OF_SPACE";
 
-    @RegExp(ref = Main.WHITE_SPACES)
+    @Lex(ref = Main.WHITE_SPACES)
     private int level;
 
     @Nullable
-    @RegExp(ref = Main.REGEXP_ID)
+    @Lex(ref = Main.REGEXP_ID)
     private String name;
     
     @Nullable

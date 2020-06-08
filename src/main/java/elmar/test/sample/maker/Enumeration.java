@@ -24,13 +24,13 @@ public abstract class Enumeration {
 	@Pattern("start - end")
 	public static class EnumerationToken extends Enumeration {
 
-		@RegExp(imp = EnumerationTokenLexer.class)
+		@Lex(imp = EnumerationTokenLexer.class)
 		@AtLeastOne
 		private String start;
 		
 	    @AtLeastOne 
 	    @PadBefore(PadPolicy.ALWAYS)
-		@RegExp(imp = EnumerationTokenLexer.class)
+		@Lex(imp = EnumerationTokenLexer.class)
 		private String end;
 
 	}
