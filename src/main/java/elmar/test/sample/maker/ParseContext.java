@@ -1,6 +1,5 @@
 package elmar.test.sample.maker;
 
-import java.lang.reflect.AnnotatedElement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -13,18 +12,18 @@ public class ParseContext {
 	private String content;
 
 	Map<String, Object> variables = new HashMap<String, Object>();
-    private Stack<AnnotatedElement> parseStatck; 
+	private Stack<ParseElement> parseStatck;
 
 	public ParseContext(String content) {
 		this.content = content;
-		
+
 	}
-	
-	public AnnotatedElement getCurrentParseElement() {
-	    if(!parseStatck.isEmpty()) {
-	        return parseStatck.peek();
-	    }
-	    return null;
+
+	public ParseElement popParseElement() {
+		if (!parseStatck.isEmpty()) {
+			return parseStatck.peek();
+		}
+		return null;
 	}
 
 	public int getInt(String identNumOfSpace, int def) {
@@ -64,15 +63,8 @@ public class ParseContext {
 		pos -= amount;
 	}
 
- 
-    public void pushParseElemet(AnnotatedElement element) {
-        parseStatck.add(element);
-    }
+	public void pushParseElemet(ParseElement element) {
+		parseStatck.add(element);
+	}
 
-
-    public AnnotatedElement popParseElement() {
-        return parseStatck.pop();
-    }
-
- 
 }
