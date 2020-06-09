@@ -9,19 +9,19 @@ import lombok.Data;
 public abstract class Enumeration {
 
 	@Data
-	@Pattern("(expression)")
+	@Template("(expression)")
 	public static class QuotatedExpression extends Enumeration {
 		Expression expression;
 	}
 
 	@Data
-	@Pattern("[tokens]")
+	@Template("[tokens]")
 	public static class MultiTokenEnumeration extends Enumeration {
 		List<EnumerationToken> tokens;
 	}
 
 	@Data
-	@Pattern("start - end")
+	@Template("start - end")
 	public static class EnumerationToken extends Enumeration {
 
 		@Lex(imp = EnumerationTokenLexer.class)

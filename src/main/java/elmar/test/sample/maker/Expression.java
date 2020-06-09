@@ -1,6 +1,6 @@
 package elmar.test.sample.maker;
 
-@Pattern("eumeration { distribution }")
+@Template("eumeration { distribution }")
 public class Expression {
     Enumeration eumeration;
     Distribution distribution;

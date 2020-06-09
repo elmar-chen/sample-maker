@@ -1,5 +1,5 @@
 package elmar.test.sample.maker;
 
-public @interface Pattern {
+public @interface Template {
 	public String value();
 }

@@ -8,7 +8,7 @@ import elmar.test.sample.maker.PadPolicy.PadBefore;
 import lombok.Data;
 
 @Data
-@Pattern("level name ~ quotation : expressions")
+@Template("level name ~ quotation : expressions")
 public class Statement {
 
 	private static final String IDENT_NUM_OF_SPACE = "IDENT_NUM_OF_SPACE";
