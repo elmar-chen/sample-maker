@@ -18,78 +18,77 @@ import elmar.test.sample.maker.annotations.Template;
 import elmar.test.sample.maker.parser.Padding;
 
 public class Main {
-    public static final String REGEXP_ID = "";
-    public static final String WHITE_SPACES = "\\s*";
+	public static final String REGEXP_ID = "";
+	public static final String WHITE_SPACES = "\\s*";
 
-    @ParseRoot
-    @Padding("\\r?\\n")
-    public static List<Statement> statements;
+	@ParseRoot
+	@Padding("\\r?\\n")
+	public static List<Statement> statements;
 
-    public static void main1(String[] args) throws IOException, ParseException {
+	public static void main1(String[] args) throws IOException, ParseException {
 
-        String content = IOUtils.resourceToString("lang.def", Charset.forName("utf-8"));
-        ParseContext context = new ParseContext(content);
+		String content = IOUtils.resourceToString("lang.def", Charset.forName("utf-8"));
+		ParseContext context = new ParseContext(content);
 
-        ParseElement root = findParseRoot(Main.class);
-        context.pushParseElemet(root);
-        doPrase(context);
+		ParseElement root = findParseRoot(Main.class);
+		context.pushParseElemet(root);
+		doPrase(context);
 
-    }
+	}
 
-    private static void doPrase(ParseContext context) throws ParseException {
-        ParseElement parseElement = null;
-        while ((parseElement = context.popParseElement()) != null) {
-            Template template = parseElement.getAnnotation(Template.class);
-            List<ParseElement> elements = getChildElements(parseElement, template.value());
-        }
+	private static void doPrase(ParseContext context) throws ParseException {
+		ParseElement parseElement = null;
+		while ((parseElement = context.popParseElement()) != null) {
+			Template template = parseElement.getAnnotation(Template.class);
+			List<ParseElement> elements = getChildElements(parseElement, template.value());
+		}
 
-    }
+	}
 
-    private static List<ParseElement> getChildElements(ParseElement parseElement, String template)
-            throws ParseException {
+	private static List<ParseElement> getChildElements(ParseElement parseElement, String template) throws ParseException {
 
 //        String[] tokens = ParseUtil.splitKeepDelim(template, "\\w+").stream()
 //                .flatMap(t -> ParseUtil.splitKeepDelim(t, "[{}\\[\\]<>]").stream())
 //                .toArray(String[]::new);
 
-        List<String> parts = ParseUtil.parseTemplate(template);
+		List<String> parts = ParseUtil.parseTemplate(template);
 
-        for (String part : parts) {
+		for (String part : parts) {
+			String[] wrapper = null;
+			boolean wrapped = ParseUtil.LEFT_CHARS.indexOf(part.charAt(0)) >= 0;
+			if (wrapped) {
+				part = part.substring(0, part.length() - 1);
+				wrapper = new String[] { part.substring(0, 1), part.substring(part.length() - 1) };
+			}
+			ParseElement ele = ParseElement.fromTemplate();
+			ele.setWrapper(new String[] { part });
+		}
+		System.out.println(parts);
+		return null;
+	}
 
-            boolean wrapped = ParseUtil.LEFT_CHARS.indexOf(part.charAt(0)) >= 0;
-            if (wrapped) {
-                part = part.substring(0, part.length() - 1);
-            }
+	private static ParseElement findParseRoot(Class<?> clazz) throws ParseException {
+		Field[] fields = clazz.getDeclaredFields();
+		Method[] methods = clazz.getDeclaredMethods();
+		Predicate<? super AnnotatedElement> isParseRoot = f -> f.isAnnotationPresent(ParseRoot.class);
+		List<Field> annoedFields = Stream.of(fields).filter(isParseRoot).collect(Collectors.toList());
+		List<Method> annoedMethods = Stream.of(methods).filter(isParseRoot).collect(Collectors.toList());
 
-        }
-        System.out.println(parts);
-        return null;
-    }
+		if (annoedFields.size() + annoedMethods.size() > 1) {
+			throw new ParseException("Multiple @ParseRoot found in " + clazz.getName() + ". Only one occurence is allowed.", -1);
+		}
+		if (annoedFields.size() == 1) {
+			return ParseElement.from(annoedFields.get(0));
+		}
+		if (annoedMethods.size() == 1) {
+			return ParseElement.from(annoedMethods.get(0));
+		}
 
-    private static ParseElement findParseRoot(Class<?> clazz) throws ParseException {
-        Field[] fields = clazz.getDeclaredFields();
-        Method[] methods = clazz.getDeclaredMethods();
-        Predicate<? super AnnotatedElement> isParseRoot = f -> f.isAnnotationPresent(ParseRoot.class);
-        List<Field> annoedFields = Stream.of(fields).filter(isParseRoot).collect(Collectors.toList());
-        List<Method> annoedMethods = Stream.of(methods).filter(isParseRoot).collect(Collectors.toList());
+		return ParseElement.from(clazz);
+	}
 
-        if (annoedFields.size() + annoedMethods.size() > 1) {
-            throw new ParseException(
-                    "Multiple @ParseRoot found in " + clazz.getName() + ". Only one occurence is allowed.", -1);
-        }
-        if (annoedFields.size() == 1) {
-            return ParseElement.from(annoedFields.get(0));
-        }
-        if (annoedMethods.size() == 1) {
-            return ParseElement.from(annoedMethods.get(0));
-        }
-
-        return ParseElement.from(clazz);
-    }
-
-    public static void main(String[] args) {
-        String[] array = ParseUtil.splitKeepDelim("function(names){string[]}", "\\w+").stream()
-                .flatMap(t -> ParseUtil.splitKeepDelim(t, "[{}\\[\\]<>]").stream()).toArray(String[]::new);
-        System.out.println(array);
-    }
+	public static void main(String[] args) {
+		String[] array = ParseUtil.splitKeepDelim("function(names){string[]}", "\\w+").stream().flatMap(t -> ParseUtil.splitKeepDelim(t, "[{}\\[\\]<>]").stream()).toArray(String[]::new);
+		System.out.println(array);
+	}
 }
