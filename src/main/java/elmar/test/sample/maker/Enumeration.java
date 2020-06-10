@@ -2,7 +2,11 @@ package elmar.test.sample.maker;
 
 import java.util.List;
 
-import elmar.test.sample.maker.PadPolicy.PadBefore;
+import elmar.test.sample.maker.annotations.AtLeastOne;
+import elmar.test.sample.maker.annotations.Lex;
+import elmar.test.sample.maker.annotations.PadPolicy;
+import elmar.test.sample.maker.annotations.Template;
+import elmar.test.sample.maker.annotations.PadPolicy.PadBefore;
 import elmar.test.sample.maker.parser.Lexer;
 import lombok.Data;
 

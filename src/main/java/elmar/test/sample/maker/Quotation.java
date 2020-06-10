@@ -1,5 +1,7 @@
 package elmar.test.sample.maker;
 
+import elmar.test.sample.maker.annotations.Lex;
+
 public class Quotation {
 
 	private int number;

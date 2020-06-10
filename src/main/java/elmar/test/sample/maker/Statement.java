@@ -4,7 +4,11 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import elmar.test.sample.maker.PadPolicy.PadBefore;
+import elmar.test.sample.maker.annotations.Lex;
+import elmar.test.sample.maker.annotations.PadPolicy;
+import elmar.test.sample.maker.annotations.Repeats;
+import elmar.test.sample.maker.annotations.Template;
+import elmar.test.sample.maker.annotations.PadPolicy.PadBefore;
 import lombok.Data;
 
 @Data

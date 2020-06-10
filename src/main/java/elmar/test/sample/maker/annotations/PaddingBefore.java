@@ -1,4 +1,4 @@
-package elmar.test.sample.maker;
+package elmar.test.sample.maker.annotations;
 
 public @interface PaddingBefore {
     public String value();
