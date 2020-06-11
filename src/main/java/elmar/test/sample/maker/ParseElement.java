@@ -5,6 +5,7 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import elmar.test.sample.maker.annotations.Template;
 import lombok.Data;
 
 @Data
@@ -29,6 +30,11 @@ public class ParseElement {
 
     public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
         return source.getAnnotation(annotationClass);
+    }
+
+    public String getTemplate() {
+        Template tplAnno = source.getAnnotation(Template.class);
+        return tplAnno == null ? null : tplAnno.value();
     }
 
     public static ParseElement from(Class<?> clazz) {
