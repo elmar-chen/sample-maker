@@ -69,6 +69,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        int[] counts = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4 };
+        int num = -1;
+
+        int count = counts[num & 0xf] + counts[num >> 4 & 0xf] + counts[num >> 8 & 0xf] + counts[num >> 12 & 0xf]
+                + counts[num >> 16 & 0xf] + counts[num >> 20 & 0xf] + counts[num >> 24 & 0xf] + counts[num >> 28 & 0xf];
+        System.out.println(count);
         System.out.println(Integer.MAX_VALUE + "--" + ((1 << 31) - 1));
         String[] array = ParseUtil.splitKeepDelim("function(names){string[]}", "\\w+").stream()
                 .flatMap(t -> ParseUtil.splitKeepDelim(t, "[{}\\[\\]<>]").stream()).toArray(String[]::new);
