@@ -38,7 +38,8 @@ public class Main {
     private static void doPrase(ParseContext context) throws ParseException {
         ParseElement parseElement = null;
         while ((parseElement = context.popParseElement()) != null) {
-            String template = parseElement.getTemplate();
+        	if(parseElement.isLexer)
+			String template = parseElement.getTemplate();
             List<String> parts = ParseUtil.parseTemplate(template);
             if (parts.size() == 1) {
 
