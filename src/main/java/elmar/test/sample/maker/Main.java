@@ -35,19 +35,14 @@ public class Main {
 
     }
 
-    private static void doPrase(ParseContext context) throws ParseException {
+    static void doPrase(ParseContext context) throws ParseException {
         ParseElement parseElement = null;
         while ((parseElement = context.popParseElement()) != null) {
-        	if(parseElement.isLexer)
-			String template = parseElement.getTemplate();
-            List<String> parts = ParseUtil.parseTemplate(template);
-            if (parts.size() == 1) {
+            parseElement.getChildElements();
 
-            }
         }
 
     }
-
     private static ParseElement findParseRoot(Class<?> clazz) throws ParseException {
         Field[] fields = clazz.getDeclaredFields();
         Method[] methods = clazz.getDeclaredMethods();
