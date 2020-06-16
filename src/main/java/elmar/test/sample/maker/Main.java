@@ -47,8 +47,13 @@ public class Main {
 
 	private static void parseElement(ParseElement parseElement) {
 		if (parseElement.isLexer()) {
-			parseLexer(parseElement);
+			parseLexer((LexerParseElement<?>) parseElement);
 		}
+
+	}
+
+	private static void parseLexer(LexerParseElement<?> parseElement) {
+		// TODO Auto-generated method stub
 
 	}
 
