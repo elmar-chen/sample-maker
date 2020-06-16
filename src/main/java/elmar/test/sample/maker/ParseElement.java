@@ -47,7 +47,8 @@ public class ParseElement {
         parseElement.template = subTemplate;
         return parseElement;
     }
-    public void getChildElements() throws ParseException {
+
+	public List<ParseElement> getChildElements() throws ParseException {
         String template = this.getTemplate();
         List<ParseElement> childElements = new ArrayList<ParseElement>();
         if (template != null) {
@@ -57,11 +58,15 @@ public class ParseElement {
                 childElements.add(ParseElement.fromTemplate(this, part, offset += parts.size()));
             }
         }
-
+		return childElements;
     }
 
     public static void main(String[] args) {
         int i = 0;
         System.out.println(i += 10);
     }
+
+	public boolean isLexer() {
+		return false;
+	}
 }

@@ -38,12 +38,21 @@ public class Main {
     static void doPrase(ParseContext context) throws ParseException {
         ParseElement parseElement = null;
         while ((parseElement = context.popParseElement()) != null) {
-            parseElement.getChildElements();
+			parseElement(parseElement);
+            
 
         }
 
     }
-    private static ParseElement findParseRoot(Class<?> clazz) throws ParseException {
+
+	private static void parseElement(ParseElement parseElement) {
+		if (parseElement.isLexer()) {
+			parseLexer(parseElement);
+		}
+
+	}
+
+	private static ParseElement findParseRoot(Class<?> clazz) throws ParseException {
         Field[] fields = clazz.getDeclaredFields();
         Method[] methods = clazz.getDeclaredMethods();
         Predicate<? super AnnotatedElement> isParseRoot = f -> f.isAnnotationPresent(ParseRoot.class);
