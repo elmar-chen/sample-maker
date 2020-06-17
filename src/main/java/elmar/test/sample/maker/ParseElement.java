@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import elmar.test.sample.maker.parser.composite.Repeat;
 import lombok.Data;
 
 @Data
@@ -16,6 +17,9 @@ public class ParseElement {
     private AnnotatedElement source;
     private String[] wrapper;
     private String template;
+
+    private Repeat repeat;
+
     public static ParseElement from(Field field) {
         ParseElement parseElement = new ParseElement();
         parseElement.source = field;
@@ -69,4 +73,9 @@ public class ParseElement {
 	public boolean isLexer() {
 		return false;
 	}
+
+    public boolean shouldRead(ParseContext context) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

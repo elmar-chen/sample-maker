@@ -1,43 +1,12 @@
 package elmar.test.sample.maker.parser.composite;
 
-public class Repeat {
+import elmar.test.sample.maker.ParseContext;
 
-    public static final Repeat ZERO_OR_ONE = new Repeat(0, 1);
-    public static final Repeat EXACTLY_ONE = new Repeat(1, 1);
-    public static final Repeat ONE_OR_MORE = new Repeat(1, Integer.MAX_VALUE);
-    public static final Repeat ANY_NUMBER = new Repeat(0, Integer.MAX_VALUE);
+public abstract class Repeat {
 
-    private final int min;
-    private final int max;
+    public static final int CAN_HAVE = 0;
+    public static final int MUST_HAVE = 1;
+    public static final int MUST_NOT_HAVE = 2;
 
-    
-    public int getMax() {
-        return max;
-    }
-    public int getMin() {
-        return min;
-    }
-    
-    public Repeat(int min, int max) {
-        this.max = max;
-        this.min = min;
-    }
-    
-    
-
-    public Repeat() {
-        this(1, Integer.MAX_VALUE);
-    }
-    
-    public static Repeat exact(int amount) {
-        return new Repeat(amount, amount);
-    }
-
-    public static Repeat atLeast(int amount) {
-        return new Repeat(amount, Integer.MAX_VALUE);
-    }
-
-    public static Repeat atMost(int amount) {
-        return new Repeat(0, amount);
-    }
+    public abstract int shouldHaveMore(ParseContext context);
 }

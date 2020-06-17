@@ -6,13 +6,17 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import lombok.Getter;
+
+@Getter
 public class ParseContext {
 
 	private int pos = 0;
 	private String content;
 
 	Map<String, Object> variables = new HashMap<String, Object>();
-	private Stack<ParseElement> parseStatck;
+    private Stack<ParseElement> parseStatck = new Stack<ParseElement>();
+    private int slibingIdx;
 
 	public ParseContext(String content) {
 		this.content = content;

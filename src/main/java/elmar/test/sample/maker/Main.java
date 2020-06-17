@@ -14,7 +14,9 @@ import java.util.stream.Stream;
 import org.apache.commons.io.IOUtils;
 
 import elmar.test.sample.maker.annotations.ParseRoot;
+import elmar.test.sample.maker.parser.Lexer;
 import elmar.test.sample.maker.parser.Padding;
+import elmar.test.sample.maker.parser.composite.Repeat;
 
 public class Main {
     public static final String REGEXP_ID = "";
@@ -24,9 +26,9 @@ public class Main {
     @Padding("\\r?\\n")
     public static List<Statement> statements;
 
-    public static void main1(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws IOException, ParseException {
         System.out.println(~0);
-        String content = IOUtils.resourceToString("lang.def", Charset.forName("utf-8"));
+        String content = IOUtils.resourceToString("/lang.def", Charset.forName("utf-8"));
         ParseContext context = new ParseContext(content);
 
         ParseElement root = findParseRoot(Main.class);
@@ -36,24 +38,30 @@ public class Main {
     }
 
     static void doPrase(ParseContext context) throws ParseException {
-        ParseElement parseElement = null;
-        while ((parseElement = context.popParseElement()) != null) {
-			parseElement(parseElement);
-            
+        while (true) {
+            ParseElement parseElement = context.popParseElement();
+            int shouldHaveMore = parseElement.getRepeat().shouldHaveMore(context);
 
+            if (shouldHaveMore == Repeat.MUST_HAVE || shouldHaveMore == Repeat.CAN_HAVE) {
+
+            }
         }
 
     }
 
-	private static void parseElement(ParseElement parseElement) {
+    private static void parseElement(ParseElement parseElement, ParseContext context) throws ParseException {
 		if (parseElement.isLexer()) {
-			parseLexer((LexerParseElement<?>) parseElement);
+            parseLexer((LexerParseElement<?>) parseElement, context);
 		}
-
+        else {
+            List<ParseElement> childElements = parseElement.getChildElements();
+            context.pushParseElemet(childElements.get(0));
+        }
 	}
 
-	private static void parseLexer(LexerParseElement<?> parseElement) {
-		// TODO Auto-generated method stub
+    private static Object parseLexer(LexerParseElement<?> parseElement, ParseContext context) {
+		Lexer<?> lexer = parseElement.getLexer();
+        return lexer.extract(context);
 
 	}
 
@@ -78,16 +86,5 @@ public class Main {
         return ParseElement.from(clazz);
     }
 
-    public static void main(String[] args) {
-        int num = -1;
 
-        int[] counts = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4 };
-        int count = counts[num & 0xf] + counts[num >> 4 & 0xf] + counts[num >> 8 & 0xf] + counts[num >> 12 & 0xf]
-                + counts[num >> 16 & 0xf] + counts[num >> 20 & 0xf] + counts[num >> 24 & 0xf] + counts[num >> 28 & 0xf];
-        System.out.println(count);
-        System.out.println(Integer.MAX_VALUE + "--" + ((1 << 31) - 1));
-        String[] array = ParseUtil.splitKeepDelim("function(names){string[]}", "\\w+").stream()
-                .flatMap(t -> ParseUtil.splitKeepDelim(t, "[{}\\[\\]<>]").stream()).toArray(String[]::new);
-        System.out.println(array);
-    }
 }

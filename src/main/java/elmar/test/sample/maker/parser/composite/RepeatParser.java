@@ -8,7 +8,7 @@ public class RepeatParser<T> extends Parser<T> {
 
     
     
-    private Repeat repeat;
+    private StaticRepeat repeat;
     private int padPolicy;
     private RegExpLexer pad;
     
@@ -23,11 +23,11 @@ public class RepeatParser<T> extends Parser<T> {
         this.target = target;
     }
 
-    public Repeat getRepeat() {
+    public StaticRepeat getRepeat() {
         return repeat;
     }
     
-    public void setRepeat(Repeat repeat) {
+    public void setRepeat(StaticRepeat repeat) {
         this.repeat = repeat;
     }
 
