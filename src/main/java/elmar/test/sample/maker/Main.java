@@ -43,7 +43,7 @@ public class Main {
             int shouldHaveMore = parseElement.getRepeat().shouldHaveMore(context);
 
             if (shouldHaveMore == Repeat.MUST_HAVE || shouldHaveMore == Repeat.CAN_HAVE) {
-
+				parseElement(parseElement, context);
             }
         }
 
