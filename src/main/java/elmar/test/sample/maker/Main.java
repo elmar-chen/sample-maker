@@ -39,12 +39,21 @@ public class Main {
 
     static void doPrase(ParseContext context) throws ParseException {
         while (true) {
-            ParseElement parseElement = context.popParseElement();
-            int shouldHaveMore = parseElement.getRepeat().shouldHaveMore(context);
 
-            if (shouldHaveMore == Repeat.MUST_HAVE || shouldHaveMore == Repeat.CAN_HAVE) {
-				parseElement(parseElement, context);
+            ParseElement lastPoppedElement = context.getLastPoppedElement();
+            if (lastPoppedElement != null) {
+                ParseResult<?> result = lastPoppedElement.getResult();
+                if (result.isSuccess()) {
+                    int shouldHaveMore = lastPoppedElement.getRepeat().shouldHaveMore(context);
+
+                    if (shouldHaveMore == Repeat.MUST_HAVE || shouldHaveMore == Repeat.CAN_HAVE) {
+                        parseElement(lastPoppedElement, context);
+                    }
+                }
             }
+
+            ParseElement parseElement = context.popParseElement();
+
         }
 
     }

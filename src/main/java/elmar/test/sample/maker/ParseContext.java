@@ -17,6 +17,7 @@ public class ParseContext {
 	Map<String, Object> variables = new HashMap<String, Object>();
     private Stack<ParseElement> parseStatck = new Stack<ParseElement>();
     private int slibingIdx;
+    private ParseElement lastPoppedElement;
 
 	public ParseContext(String content) {
 		this.content = content;
@@ -70,5 +71,6 @@ public class ParseContext {
 	public void pushParseElemet(ParseElement element) {
 		parseStatck.add(element);
 	}
+
 
 }

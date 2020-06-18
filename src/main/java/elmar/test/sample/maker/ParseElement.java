@@ -20,6 +20,7 @@ public class ParseElement {
 
     private Repeat repeat;
 
+    private ParseResult<?> result;
     public static ParseElement from(Field field) {
         ParseElement parseElement = new ParseElement();
         parseElement.source = field;
@@ -78,4 +79,6 @@ public class ParseElement {
         // TODO Auto-generated method stub
         return false;
     }
+
+
 }
