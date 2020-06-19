@@ -42,6 +42,7 @@ public class Main {
 
             ParseElement lastPoppedElement = context.getLastPoppedElement();
             if (lastPoppedElement != null) {
+                // pop
                 ParseResult<?> result = lastPoppedElement.getResult();
                 if (result.isSuccess()) {
                     int shouldHaveMore = lastPoppedElement.getRepeat().shouldHaveMore(context);
@@ -49,6 +50,8 @@ public class Main {
                     if (shouldHaveMore == Repeat.MUST_HAVE || shouldHaveMore == Repeat.CAN_HAVE) {
                         parseElement(lastPoppedElement, context);
                     }
+                } else {
+                    context.
                 }
             }
 
