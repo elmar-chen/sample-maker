@@ -16,7 +16,6 @@ import org.apache.commons.io.IOUtils;
 import elmar.test.sample.maker.annotations.ParseRoot;
 import elmar.test.sample.maker.parser.Lexer;
 import elmar.test.sample.maker.parser.Padding;
-import elmar.test.sample.maker.parser.composite.Repeat;
 
 public class Main {
     public static final String REGEXP_ID = "";
@@ -44,23 +43,55 @@ public class Main {
             if (result != null) {
                 // pop
                 if (result.isSuccess()) {
-                    int shouldHaveMore = currentElement.shouldHaveMore(context);
+					boolean shouldHaveMore = currentElement.shouldHaveMore(context);
 
-                    if (shouldHaveMore == Repeat.MUST_HAVE || shouldHaveMore == Repeat.CAN_HAVE) {
-                        parseElement(lastPoppedElement, context);
+					if (shouldHaveMore) {
+						context.pushParseElemet(currentElement);
+					} else {
+						ParseElement slibing = currentElement.getSlibing();
+						if (slibing != null) {
+							context.pushParseElemet(slibing);
+						} else {
+							context.popToParent();
+						}
                     }
 
                 } else {
+					boolean minimalMeet = currentElement.minimalMet();
+					if (minimalMeet) {
+						ParseElement slibing = currentElement.getSlibing();
+						if (slibing != null) {
+							context.pushParseElemet(slibing);
+						} else {
+							context.popToParent();
+						}
+					} else {
+						popError();
+					}
                 }
             }
-
-            ParseElement parseElement = popParseElement;
+			else {
+				if (currentElement.getChildElements().size() > 1) {
+					context.pushParseElemet(currentElement.getChildElements().get(0));
+				} else {
+					pushResult(parseElement(currentElement, context));
+				}
+			}
 
         }
 
     }
 
-    private static void parseElement(ParseElement parseElement, ParseContext context) throws ParseException {
+	private static void pushResult(Object obj) {
+
+	}
+
+	private static void popError() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private static Object parseElement(ParseElement parseElement, ParseContext context) throws ParseException {
 		if (parseElement.isLexer()) {
             parseLexer((LexerParseElement<?>) parseElement, context);
 		}
@@ -68,6 +99,7 @@ public class Main {
             List<ParseElement> childElements = parseElement.getChildElements();
             context.pushParseElemet(childElements.get(0));
         }
+		return null;
 	}
 
     private static Object parseLexer(LexerParseElement<?> parseElement, ParseContext context) {

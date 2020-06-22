@@ -80,8 +80,18 @@ public class ParseElement {
         return false;
     }
 
-    public int shouldHaveMore(ParseContext context) {
-        return this.getRepeat().shouldHaveMore(context);
+	public boolean shouldHaveMore(ParseContext context) {
+		return this.getRepeat().canHaveMore(context);
     }
+
+	public ParseElement getSlibing() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean minimalMet() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
