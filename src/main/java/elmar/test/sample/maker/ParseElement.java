@@ -80,5 +80,8 @@ public class ParseElement {
         return false;
     }
 
+    public int shouldHaveMore(ParseContext context) {
+        return this.getRepeat().shouldHaveMore(context);
+    }
 
 }

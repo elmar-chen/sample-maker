@@ -72,5 +72,9 @@ public class ParseContext {
 		parseStatck.add(element);
 	}
 
+    public ParseResult<?> getLastResult() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }
