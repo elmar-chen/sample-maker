@@ -39,7 +39,10 @@ public class Main {
     static void doPrase(ParseContext context) throws ParseException {
         while (true) {
             ParseElement currentElement = context.popParseElement();
-
+            if(currentElement.isLexer()) {
+                currentElement.
+            }
+            
             ParseResult<?> result = context.getLastResult();
             if (result != null) {
                 // pop
