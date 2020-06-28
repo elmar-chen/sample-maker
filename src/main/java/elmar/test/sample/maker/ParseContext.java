@@ -82,4 +82,9 @@ public class ParseContext {
 
 	}
 
+	public int getCurrentResultCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -1,6 +1,8 @@
 package elmar.test.sample.maker.parser.composite;
 
-public class StaticRepeat {
+import elmar.test.sample.maker.ParseContext;
+
+public class StaticRepeat extends Repeat {
 
     public static final StaticRepeat ZERO_OR_ONE = new StaticRepeat(0, 1);
     public static final StaticRepeat EXACTLY_ONE = new StaticRepeat(1, 1);
@@ -40,4 +42,10 @@ public class StaticRepeat {
     public static StaticRepeat atMost(int amount) {
         return new StaticRepeat(0, amount);
     }
+
+	@Override
+	public boolean canHaveMore(ParseContext context) {
+		int c = context.getCurrentResultCount();
+		return c < max;
+	}
 }
