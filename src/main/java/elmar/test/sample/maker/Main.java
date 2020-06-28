@@ -39,6 +39,7 @@ public class Main {
     static void doPrase(ParseContext context) throws ParseException {
         while (true) {
             ParseElement currentElement = context.popParseElement();
+
             ParseResult<?> result = context.getLastResult();
             if (result != null) {
                 // pop
