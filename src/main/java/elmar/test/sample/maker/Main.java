@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Main {
     public static List<Statement> statements;
 
     public static void main(String[] args) throws IOException, ParseException {
-        System.out.println(~0);
+        System.out.println(URLDecoder.decode("1+1", "utf-8"));
         String content = IOUtils.resourceToString("/lang.def", Charset.forName("utf-8"));
         ParseContext context = new ParseContext(content);
 

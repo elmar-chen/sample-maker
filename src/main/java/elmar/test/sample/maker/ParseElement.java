@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import elmar.test.sample.maker.annotations.Template;
 import elmar.test.sample.maker.parser.composite.Repeat;
 import elmar.test.sample.maker.parser.composite.StaticRepeat;
 import lombok.Data;
@@ -28,25 +29,54 @@ public class ParseElement {
 	public static ParseElement from(Field field) throws ParseException {
 		ParseElement parseElement = new ParseElement();
 		parseElement.source = field;
-		if (List.class.isAssignableFrom(field.getType())) {
-			Class<?> type = field.getType();
-			Type genericType = field.getGenericType();
-			if (genericType instanceof ParameterizedType) {
-				ParameterizedType paramedType = (ParameterizedType) genericType;
-				Type[] actualTypeArguments = paramedType.getActualTypeArguments();
-				if (actualTypeArguments.length == 1 && actualTypeArguments[0] instanceof Class)
-					parseElement.targetClass = (Class<?>) actualTypeArguments[0];
-
-				if (parseElement.targetClass == null)
-					throw new ParseException("Cann't determine the actual type", -1);
-				parseElement.repeat = StaticRepeat.ANY_NUMBER;
-			} else {
-				parseElement.targetClass = type;
-				parseElement.repeat = StaticRepeat.ZERO_OR_ONE;
-			}
-		}
+        determineByType(field.getGenericType(), parseElement);
+        Template tplAnno = parseElement.targetClass.getDeclaredAnnotation(Template.class);
+        parseElement.template = tplAnno == null ? "" : tplAnno.value();
 		return parseElement;
 	}
+
+    private static void determineByType(Type type, ParseElement parseElement) throws ParseException {
+        Class<?> rawType = null;
+        ParameterizedType paramedType = null;
+        Type[] typeArgs = null;
+
+        if (type instanceof ParameterizedType) {
+            paramedType = (ParameterizedType) type;
+            rawType = (Class<?>) paramedType.getRawType();
+            typeArgs = paramedType.getActualTypeArguments();
+        }
+        if (List.class.isAssignableFrom(rawType)) {
+            if (isTypeArgumentsDetermined(1, typeArgs)) {
+                parseElement.targetClass = (Class<?>) typeArgs[0];
+                parseElement.repeat = StaticRepeat.ANY_NUMBER;
+            }
+        } else if (rawType != null) {
+            parseElement.targetClass = rawType;
+            parseElement.repeat = StaticRepeat.ZERO_OR_ONE;
+        }
+        else {
+            throw new ParseException("cannot determine the type", 1);
+        }
+//        } else if (Map.class.isAssignableFrom(rawType)) {
+//            if (isTypeArgumentsDetermined(2, typeArgs)) {
+//                parseElement.targetClass = rawType;
+//                parseElement.repeat = StaticRepeat.ANY_NUMBER;
+//            }
+//        }
+
+    }
+
+    private static boolean isTypeArgumentsDetermined(int n, Type[] typeArgs) {
+        boolean valid = typeArgs.length == n;
+        for (int i = 0; i < n && valid; i++) {
+            valid = valid && isDeterminedType(typeArgs[0]);
+        }
+        return valid;
+    }
+
+    private static boolean isDeterminedType(Type type) {
+        return type instanceof Class<?> || type instanceof ParameterizedType;
+    }
 
 	public static ParseElement from(Method field) {
 		ParseElement parseElement = new ParseElement();
@@ -86,10 +116,6 @@ public class ParseElement {
 		return childElements;
 	}
 
-	public static void main(String[] args) {
-		int i = 0;
-		System.out.println(i += 10);
-	}
 
 	public boolean isLexer() {
 		return false;
