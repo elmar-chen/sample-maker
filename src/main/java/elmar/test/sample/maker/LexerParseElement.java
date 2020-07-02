@@ -3,9 +3,9 @@ package elmar.test.sample.maker;
 import elmar.test.sample.maker.parser.Lexer;
 
 public class LexerParseElement<T> extends ParseElement {
-	Lexer<T> lexer;
+	Lexer lexer;
 
-	public Lexer<T> getLexer() {
+	public Lexer getLexer() {
 		return lexer;
 	}
 

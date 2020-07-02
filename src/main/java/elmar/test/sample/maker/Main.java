@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 import org.apache.commons.io.IOUtils;
 
 import elmar.test.sample.maker.annotations.ParseRoot;
-import elmar.test.sample.maker.parser.Lexer;
 import elmar.test.sample.maker.parser.Padding;
 
 public class Main {
@@ -41,11 +40,35 @@ public class Main {
         while (true) {
             ParseElement currentElement = context.popParseElement();
             boolean shouldHaveMore = currentElement.shouldHaveMore(context);
-            currentElement.getChildElements();
-            
+			if (shouldHaveMore) {
+				if (currentElement instanceof LexerParseElement<?>) {
+					LexerParseElement<?> lexerParseElement = (LexerParseElement<?>) currentElement;
+					String text = lexerParseElement.getLexer().readText(context);
+					if (text == null) {
+						fail();
+					} else {
+						currentElement.addResult(text);
+					}
+				} else {
+					List<ParseElement> childs = currentElement.getChildElements();
+					context.pushParseElemet(childs.get(0));
+				}
+			}
+			else {
+				if (currentElement.minimalMet()) {
+					currentElement.finish();
+				} else {
+					fail();
+				}
+			}
         }
 
     }
+
+	private static void fail() {
+		// TODO Auto-generated method stub
+
+	}
 
 	private static void pushResult(Object obj) {
 
@@ -56,22 +79,9 @@ public class Main {
 
 	}
 
-	private static Object parseElement(ParseElement parseElement, ParseContext context) throws ParseException {
-		if (parseElement.isLexer()) {
-            parseLexer((LexerParseElement<?>) parseElement, context);
-		}
-        else {
-            List<ParseElement> childElements = parseElement.getChildElements();
-            context.pushParseElemet(childElements.get(0));
-        }
-		return null;
-	}
 
-    private static Object parseLexer(LexerParseElement<?> parseElement, ParseContext context) {
-		Lexer<?> lexer = parseElement.getLexer();
-        return lexer.extract(context);
 
-	}
+
 
 	private static ParseElement findParseRoot(Class<?> clazz) throws ParseException {
         Field[] fields = clazz.getDeclaredFields();

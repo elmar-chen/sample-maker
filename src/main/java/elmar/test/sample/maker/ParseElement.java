@@ -140,4 +140,14 @@ public class ParseElement {
 		return false;
 	}
 
+	public void addResult(String text) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void finish() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

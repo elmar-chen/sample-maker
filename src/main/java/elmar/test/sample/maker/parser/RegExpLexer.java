@@ -2,7 +2,7 @@ package elmar.test.sample.maker.parser;
 
 import elmar.test.sample.maker.ParseContext;
 
-public class RegExpLexer implements Lexer<String> {
+public class RegExpLexer implements Lexer {
 	private String pattern;
 
 	public RegExpLexer(String regex) {
@@ -10,7 +10,7 @@ public class RegExpLexer implements Lexer<String> {
 	}
 
 	@Override
-	public String extract(ParseContext context) {
+	public String readText(ParseContext context) {
 		return context.readRegExp(pattern);
 	}
 }
