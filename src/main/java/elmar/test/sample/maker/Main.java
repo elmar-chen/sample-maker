@@ -40,47 +40,9 @@ public class Main {
     static void doPrase(ParseContext context) throws ParseException {
         while (true) {
             ParseElement currentElement = context.popParseElement();
+            boolean shouldHaveMore = currentElement.shouldHaveMore(context);
+            currentElement.getChildElements();
             
-
-            ParseResult<?> result = context.getLastResult();
-            if (result != null) {
-                // pop
-                if (result.isSuccess()) {
-					boolean shouldHaveMore = currentElement.shouldHaveMore(context);
-
-					if (shouldHaveMore) {
-						context.pushParseElemet(currentElement);
-					} else {
-						ParseElement slibing = currentElement.getSlibing();
-						if (slibing != null) {
-							context.pushParseElemet(slibing);
-						} else {
-							context.popToParent();
-						}
-                    }
-
-                } else {
-					boolean minimalMeet = currentElement.minimalMet();
-					if (minimalMeet) {
-						ParseElement slibing = currentElement.getSlibing();
-						if (slibing != null) {
-							context.pushParseElemet(slibing);
-						} else {
-							context.popToParent();
-						}
-					} else {
-						popError();
-					}
-                }
-            }
-			else {
-				if (currentElement.getChildElements().size() > 1) {
-					context.pushParseElemet(currentElement.getChildElements().get(0));
-				} else {
-					pushResult(parseElement(currentElement, context));
-				}
-			}
-
         }
 
     }
