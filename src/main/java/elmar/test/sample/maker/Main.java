@@ -45,7 +45,7 @@ public class Main {
 					LexerParseElement<?> lexerParseElement = (LexerParseElement<?>) currentElement;
 					String text = lexerParseElement.getLexer().readText(context);
 					if (text == null) {
-						fail();
+                        currentElement.fail();
 					} else {
 						currentElement.addResult(text);
 					}
@@ -58,26 +58,14 @@ public class Main {
 				if (currentElement.minimalMet()) {
 					currentElement.finish();
 				} else {
-					fail();
+                    currentElement.fail();
 				}
 			}
         }
 
     }
 
-	private static void fail() {
-		// TODO Auto-generated method stub
 
-	}
-
-	private static void pushResult(Object obj) {
-
-	}
-
-	private static void popError() {
-		// TODO Auto-generated method stub
-
-	}
 
 
 

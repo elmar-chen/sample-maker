@@ -26,6 +26,8 @@ public class ParseElement {
 
 	private ParseResult<?> result;
 
+    private boolean lastAttempFailed;
+
 	public static ParseElement from(Field field) throws ParseException {
 		ParseElement parseElement = new ParseElement();
 		parseElement.source = field;
@@ -127,7 +129,7 @@ public class ParseElement {
 	}
 
 	public boolean shouldHaveMore(ParseContext context) {
-		return this.getRepeat().canHaveMore(context);
+        return !this.lastAttempFailed && this.getRepeat().canHaveMore(context);
 	}
 
 	public ParseElement getSlibing() {
@@ -149,5 +151,10 @@ public class ParseElement {
 		// TODO Auto-generated method stub
 
 	}
+
+    public void fail() {
+        // TODO Auto-generated method stub
+
+    }
 
 }
