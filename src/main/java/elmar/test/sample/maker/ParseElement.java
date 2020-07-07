@@ -114,6 +114,9 @@ public class ParseElement {
 			for (String part : parts) {
 				childElements.add(ParseElement.fromTemplate(this, part, offset += parts.size()));
 			}
+			if (childElements.size() == 1) {
+				childElements = childElements.get(0).getChildElements();
+			}
 		}
 		return childElements;
 	}
