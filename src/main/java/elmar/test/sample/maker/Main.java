@@ -29,9 +29,23 @@ public class Main {
         ParseContext context = new ParseContext(content);
 
         ParseElement root = findParseRoot(Main.class);
+
+        loadParseTree(root);
+
+        List<ParseElement> childElements = root.getChildElements();
+
+        System.out.println(childElements);
         context.pushParseElemet(root);
         doPrase(context);
 
+    }
+
+    private static void loadParseTree(ParseElement root) {
+        String template = root.getTemplate();
+        if (template != null) {
+            List<String> parts = ParseUtil.extractParts(template);
+            for(parts.)
+        }
     }
 
     static void doPrase(ParseContext context) throws ParseException {
@@ -54,7 +68,13 @@ public class Main {
 			}
 			else {
 				if (currentElement.minimalMet()) {
-					currentElement.finish();
+                    ParseElement slibing = currentElement.getSlibing();
+                    if (slibing != null) {
+                        context.pushParseElemet(slibing);
+                    }
+                    else {
+                        // do nothing, parent is on top of stack;
+                    }
 				} else {
                     currentElement.fail();
 				}

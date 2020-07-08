@@ -30,7 +30,7 @@ public class ParseUtil {
         return rslt;
     }
 
-    public static List<String> parseTemplate(String template) throws ParseException {
+    public static List<String> extractParts(String template) throws ParseException {
 
         List<String> parts = new ArrayList<String>();
         int i = 0;

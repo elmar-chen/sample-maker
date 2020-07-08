@@ -77,7 +77,7 @@ public class GetterParseElement {
 		String template = this.getTemplate();
 		List<GetterParseElement> childElements = new ArrayList<GetterParseElement>();
 		if (template != null) {
-			List<String> parts = ParseUtil.parseTemplate(template);
+			List<String> parts = ParseUtil.extractParts(template);
 			int offset = 0;
 			for (String part : parts) {
 				childElements.add(GetterParseElement.fromTemplate(this, part, offset += parts.size()));

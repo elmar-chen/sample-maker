@@ -77,7 +77,7 @@ public class FieldParseElement {
 		String template = this.getTemplate();
 		List<FieldParseElement> childElements = new ArrayList<FieldParseElement>();
 		if (template != null) {
-			List<String> parts = ParseUtil.parseTemplate(template);
+			List<String> parts = ParseUtil.extractParts(template);
 			int offset = 0;
 			for (String part : parts) {
 				childElements.add(FieldParseElement.fromTemplate(this, part, offset += parts.size()));
