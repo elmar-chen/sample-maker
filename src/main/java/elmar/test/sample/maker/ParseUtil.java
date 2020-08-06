@@ -34,8 +34,13 @@ public class ParseUtil {
 
         List<String> parts = new ArrayList<String>();
         int i = 0;
-        boolean readPaired = false;
         while (i < template.length()) {
+            char ch = template.charAt(i);
+            if (Character.isWhitespace(ch)) {
+                i++;
+                continue;
+            }
+            boolean readPaired = LEFT_CHARS.indexOf(ch) >= 0;
             String token = readPaired ? readPaired(i, template) : readUnpaired(i, template);
             i += token.length();
             if (token.length() > 0)
@@ -100,7 +105,7 @@ public class ParseUtil {
             int idxLeft = LEFT_CHARS.indexOf(ch);
             int idxRight = RIGHT_CHARS.indexOf(ch);
 
-            if (idxLeft >= 0) {
+            if (idxLeft >= 0 || Character.isWhitespace(ch)) {
                 break;
             }
             if (idxRight >= 0) {
@@ -112,6 +117,10 @@ public class ParseUtil {
         }
 
         return sb.toString();
+    }
+
+    static boolean isLeftChar(char c) {
+        return LEFT_CHARS.indexOf(c)>=0;
     }
 
 

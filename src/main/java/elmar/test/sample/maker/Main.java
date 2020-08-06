@@ -40,56 +40,46 @@ public class Main {
 
     }
 
-    private static void loadParseTree(ParseElement root) {
+    private static void loadParseTree(ParseElement root) throws ParseException {
         String template = root.getTemplate();
-        if (template != null) {
-            List<String> parts = ParseUtil.extractParts(template);
-            for(parts.)
-        }
+        List<String> parts = ParseUtil.extractParts(template);
+        System.out.println(parts);
     }
 
     static void doPrase(ParseContext context) throws ParseException {
         while (true) {
             ParseElement currentElement = context.popParseElement();
             boolean shouldHaveMore = currentElement.shouldHaveMore(context);
-			if (shouldHaveMore) {
-				if (currentElement instanceof LexerParseElement<?>) {
-					LexerParseElement<?> lexerParseElement = (LexerParseElement<?>) currentElement;
-					String text = lexerParseElement.getLexer().readText(context);
-					if (text == null) {
+            if (shouldHaveMore) {
+                if (currentElement instanceof LexerParseElement<?>) {
+                    LexerParseElement<?> lexerParseElement = (LexerParseElement<?>) currentElement;
+                    String text = lexerParseElement.getLexer().readText(context);
+                    if (text == null) {
                         currentElement.fail();
-					} else {
-						currentElement.addResult(text);
-					}
-				} else {
-					List<ParseElement> childs = currentElement.getChildElements();
-					context.pushParseElemet(childs.get(0));
-				}
-			}
-			else {
-				if (currentElement.minimalMet()) {
+                    } else {
+                        currentElement.addResult(text);
+                    }
+                } else {
+                    List<ParseElement> childs = currentElement.getChildElements();
+                    context.pushParseElemet(childs.get(0));
+                }
+            } else {
+                if (currentElement.minimalMet()) {
                     ParseElement slibing = currentElement.getSlibing();
                     if (slibing != null) {
                         context.pushParseElemet(slibing);
-                    }
-                    else {
+                    } else {
                         // do nothing, parent is on top of stack;
                     }
-				} else {
+                } else {
                     currentElement.fail();
-				}
-			}
+                }
+            }
         }
 
     }
 
-
-
-
-
-
-
-	private static ParseElement findParseRoot(Class<?> clazz) throws ParseException {
+    private static ParseElement findParseRoot(Class<?> clazz) throws ParseException {
         Field[] fields = clazz.getDeclaredFields();
         Method[] methods = clazz.getDeclaredMethods();
         Predicate<? super AnnotatedElement> isParseRoot = f -> f.isAnnotationPresent(ParseRoot.class);
@@ -109,6 +99,5 @@ public class Main {
 
         return ParseElement.from(clazz);
     }
-
 
 }

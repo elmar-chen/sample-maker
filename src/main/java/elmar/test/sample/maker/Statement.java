@@ -6,13 +6,13 @@ import javax.annotation.Nullable;
 
 import elmar.test.sample.maker.annotations.Lex;
 import elmar.test.sample.maker.annotations.PadPolicy;
+import elmar.test.sample.maker.annotations.PadPolicy.PadBefore;
 import elmar.test.sample.maker.annotations.Repeats;
 import elmar.test.sample.maker.annotations.Template;
-import elmar.test.sample.maker.annotations.PadPolicy.PadBefore;
 import lombok.Data;
 
 @Data
-@Template("level name ~ quotation : expressions")
+@Template("level name ~ quotation : { expressions }")
 public class Statement {
 
 	private static final String IDENT_NUM_OF_SPACE = "IDENT_NUM_OF_SPACE";
