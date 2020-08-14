@@ -43,10 +43,18 @@ public class Main {
     private static void loadParseTree(ParseElement root) throws ParseException {
         String template = root.getTemplate();
         List<String> parts = ParseUtil.extractParts(template);
+        for (String part : parts) {
+			ParseElement ele = loadParseTreeByTemplate(part, root);
+		}
         System.out.println(parts);
     }
 
-    static void doPrase(ParseContext context) throws ParseException {
+    private static ParseElement loadParseTreeByTemplate(String part, ParseElement root) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	static void doPrase(ParseContext context) throws ParseException {
         while (true) {
             ParseElement currentElement = context.popParseElement();
             boolean shouldHaveMore = currentElement.shouldHaveMore(context);
