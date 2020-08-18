@@ -44,13 +44,13 @@ public class Main {
         String template = root.getTemplate();
         List<String> parts = ParseUtil.extractParts(template);
         for (String part : parts) {
-			ParseElement ele = loadParseTreeByTemplate(part, root);
+			ParseElement ele = loadParseTreeByTemplatePart(part, root);
 		}
         System.out.println(parts);
     }
 
-    private static ParseElement loadParseTreeByTemplate(String part, ParseElement root) {
-		// TODO Auto-generated method stub
+    private static ParseElement loadParseTreeByTemplatePart(String part, ParseElement root) {
+    	ParseUtil.isWrapped(part);
 		return null;
 	}
 
