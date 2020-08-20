@@ -25,6 +25,7 @@ public class FieldParseElement {
 
 	private ParseResult<?> result;
 
+	
 	public static FieldParseElement from(Field field) throws ParseException {
 		FieldParseElement parseElement = new FieldParseElement();
 		parseElement.source = field;
@@ -88,7 +89,7 @@ public class FieldParseElement {
 
 	public static void main(String[] args) {
 		int i = 0;
-		System.out.println(i += 10);
+		System.out.println(i += 10); 
 	}
 
 	public boolean isLexer() {
