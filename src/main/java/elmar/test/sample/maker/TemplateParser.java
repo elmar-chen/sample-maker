@@ -53,7 +53,7 @@ public class TemplateParser {
 	public static List<String> splitKeepDelim(String text, String regExp) {
 		Matcher matcher = Pattern.compile(regExp).matcher(text);
 		List<String> rslt = new ArrayList<String>();
-		int lastEnd = 0;
+		int lastEnd = 0; 
 		while (matcher.find()) {
 			if (lastEnd < matcher.start()) {
 				rslt.add(text.substring(lastEnd, matcher.start()));
