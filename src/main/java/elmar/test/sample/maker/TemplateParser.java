@@ -3,6 +3,7 @@ package elmar.test.sample.maker;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,7 @@ public class TemplateParser {
 	public static final String RIGHT_CHARS = ")]}>\"`";
 
 	private String template;
+	private StringBuilder buff;
 
 	private int parseIndex;
 	
@@ -19,14 +21,30 @@ public class TemplateParser {
 	
 	public TemplateParser(String template) {
 		this.template = template;
+		buff = new StringBuilder(template.length());
 	}
 	
 	TemplatePart readNext() {
-		skipSpaces();
-		readPrefix();
+		read(Character::isWhitespace);
+		
+		Predicate readPrefix= c->{
+			return false;
+			
+		};
 		return null;
 	}
 
+	private void read(Predicate<Character> shouldRead) {
+		buff.setLength(0);
+		while(parseIndex<template.length()) {
+			char ch = template.charAt(parseIndex);
+			if(!shouldRead.test(ch)) {
+				break;
+			}
+			parseIndex++;
+		}
+	}
+	
 	private void skipSpaces() {
 		while(parseIndex<template.length()) {
 			char ch = template.charAt(parseIndex);
