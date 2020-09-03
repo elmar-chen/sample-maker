@@ -3,6 +3,7 @@ package elmar.test.sample.maker;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +27,20 @@ public class TemplateParser {
 	
 	TemplatePart readNext() {
 		read(Character::isWhitespace);
+		AtomicBoolean isLastWhiteSpace = new AtomicBoolean(false);
+		String prefix = read(new Predicate<Character>() {
+			
+			boolean first = true;
+			@Override
+			public boolean test(Character c) {
+				isLastWhiteSpace.set(Character.isWhitespace(c));
+				return !Character.isJavaIdentifierPart(c) && !isLastWhiteSpace.get();
+			}
+		});
+		
+		if(isLastWhiteSpace.get()) {
+			return new TemplatePart(prefix);
+		}
 		
 		Predicate readPrefix= c->{
 			return false;
@@ -34,7 +49,7 @@ public class TemplateParser {
 		return null;
 	}
 
-	private void read(Predicate<Character> shouldRead) {
+	private String read(Predicate<Character> shouldRead) {
 		buff.setLength(0);
 		while(parseIndex<template.length()) {
 			char ch = template.charAt(parseIndex);
@@ -43,6 +58,7 @@ public class TemplateParser {
 			}
 			parseIndex++;
 		}
+		return buff.toString();
 	}
 	
 	private void skipSpaces() {
