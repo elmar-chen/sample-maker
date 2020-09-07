@@ -62,7 +62,7 @@ public class TemplateParser {
 	}
 	
 	private void skipSpaces() {
-		while(parseIndex<template.length()) {
+		while(parseIndex<template.length()) { 
 			char ch = template.charAt(parseIndex);
 			if(!Character.isWhitespace(ch)) {
 				break;
