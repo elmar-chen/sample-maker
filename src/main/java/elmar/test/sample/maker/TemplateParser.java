@@ -1,7 +1,9 @@
 package elmar.test.sample.maker;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
@@ -16,51 +18,57 @@ public class TemplateParser {
 	private StringBuilder buff;
 
 	private int parseIndex;
-	
+
 	private char lastRead;
-	
+
 	public TemplateParser(String template) {
 		this.template = template;
 		buff = new StringBuilder(template.length());
 	}
-	
+
 	TemplatePart readNext() {
 		read(Character::isWhitespace);
-		
-		Predicate readPrefix= c->{
-			return false;
-			
+
+		Predicate<Character> readPrefix = new Predicate<Character>() {
+			boolean isFirst = true;
+
+			@Override
+			public boolean test(Character ch) {
+				boolean result = isFirst ? Character.isJavaIdentifierStart(ch) : Character.isJavaIdentifierStart(ch);
+				isFirst = false;
+				return result;
+			}
 		};
 		return null;
 	}
 
 	private void read(Predicate<Character> shouldRead) {
 		buff.setLength(0);
-		while(parseIndex<template.length()) {
+		while (parseIndex < template.length()) {
 			char ch = template.charAt(parseIndex);
-			if(!shouldRead.test(ch)) {
+			if (!shouldRead.test(ch)) {
 				break;
 			}
 			parseIndex++;
 		}
 	}
-	
+
 	private void skipSpaces() {
-		while(parseIndex<template.length()) {
+		while (parseIndex < template.length()) {
 			char ch = template.charAt(parseIndex);
-			if(!Character.isWhitespace(ch)) {
+			if (!Character.isWhitespace(ch)) {
 				break;
 			}
 			parseIndex++;
 		}
-		
+
 	}
 
 	private String readPrefix() {
 		int startIdx = parseIndex;
-		while(parseIndex<template.length()) {
+		while (parseIndex < template.length()) {
 			char ch = template.charAt(parseIndex);
-			if(!Character.isWhitespace(ch)) {
+			if (!Character.isWhitespace(ch)) {
 				break;
 			}
 			parseIndex++;
@@ -71,7 +79,7 @@ public class TemplateParser {
 	public static List<String> splitKeepDelim(String text, String regExp) {
 		Matcher matcher = Pattern.compile(regExp).matcher(text);
 		List<String> rslt = new ArrayList<String>();
-		int lastEnd = 0; 
+		int lastEnd = 0;
 		while (matcher.find()) {
 			if (lastEnd < matcher.start()) {
 				rslt.add(text.substring(lastEnd, matcher.start()));
@@ -186,5 +194,13 @@ public class TemplateParser {
 		int rightIdx = RIGHT_CHARS.indexOf(part.charAt(part.length() - 1));
 		return part.length() >= 2 && leftIdx == rightIdx && leftIdx >= 0;
 	}
-
+	public static void main(String[] args) {
+		byte[] decode = new org.apache.commons.codec.binary.Base64().decode("eyJzdWIiOiJRRlAtMkRFMTE4RkEiLCJhdWQiOiJDQVRQZWlqaWFuXzIwMjBfYWNfY2xpZW50IiwianRpIjoiN0hsRldIazFtaHh0WEZ2d0tTdlY2bCIsImlzcyI6Imh0dHBzOi8vZmVkbG9naW5xYS5jYXQuY29tIiwiaWF0IjoxNTk4NDIzNzE2LCJleHAiOjE1OTg0MjQwMTYsImFjciI6InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphYzpjbGFzc2VzOnVuc3BlY2lmaWVkIiwidGVsZXBob25lbnVtYmVyIjoiKzg2MTgwMTI2NjQ0MDUiLCJnaXZlbm5hbWUiOiLmtYvor5XotKblj7ciLCJzbiI6Iua1i-ivlei0puWPtyIsImNhdHJlY2lkIjoiUUZQLTJERTExOEZBIiwicGkuc3JpIjoiU3l1V2RKMmVycmZKVGdOYXd0SWR6aURoWWUwLi5SZ0trIn0");
+		try {
+			System.out.println(new String(decode, "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

@@ -45,5 +45,9 @@ public class Statement {
 		}
 		return numOfTab + numOfSpace / numOfSpaceAsOneIdent;
 	}
-
+	
+	public void configParser() {
+		
+	}
+	
 }
