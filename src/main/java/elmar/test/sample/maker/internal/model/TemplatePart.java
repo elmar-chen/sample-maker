@@ -1,4 +1,4 @@
-package elmar.test.sample.maker;
+package elmar.test.sample.maker.internal.model;
 
 import lombok.Data;
 
