@@ -1,8 +1,8 @@
 package elmar.test.sample.maker.internal.model;
 
-public class TemplatePart {
+public class PaddingTemplatePart {
 	enum Type{TEXT, ID, EXPR};
-	public TemplatePart(String text) {
+	public PaddingTemplatePart(String text) {
 		type = Type.TEXT;
 		content = text;
 	}

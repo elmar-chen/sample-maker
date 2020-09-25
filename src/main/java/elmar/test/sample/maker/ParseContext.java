@@ -6,6 +6,7 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import elmar.test.sample.maker.internal.model.Template;
 import lombok.Getter;
 
 @Getter
@@ -85,6 +86,10 @@ public class ParseContext {
 	public int getCurrentResultCount() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void setListRootElement(Class<Template> clazz) {
+		
 	}
 
 }
