@@ -7,9 +7,11 @@ public class WrapperRightPartGrammarNode implements GrammarNode{
 	private WrapperLeftPartGrammarNode leftNode;
 
 	@Override
-	public boolean read(ParseContext context) {
-		char readChar = context.readChar();
+	public boolean read(ParseContext context, char readChar) {
 		return leftNode.getExpectedRightPart() == readChar;
 	}
-	
+	@Override
+	public boolean readEmpty(ParseContext context) {
+		return false;
+	}
 }

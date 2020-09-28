@@ -92,4 +92,8 @@ public class ParseContext {
 		
 	}
 
+	public GrammarNode createGrammarNodeForClass(Class<?> componentClass) {
+		return null;
+	}
+
 }

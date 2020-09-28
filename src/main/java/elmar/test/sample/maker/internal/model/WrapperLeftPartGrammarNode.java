@@ -9,8 +9,8 @@ public class WrapperLeftPartGrammarNode implements GrammarNode{
 
 	private char left = (char) -1;
 	
-	public boolean read(ParseContext context) {
-		char readChar = context.readChar();
+	
+	public boolean read(ParseContext context, char readChar) {
 		if(LEFT_CHARS.indexOf(readChar)>=0) {
 			left = readChar;
 			return true;
@@ -18,6 +18,10 @@ public class WrapperLeftPartGrammarNode implements GrammarNode{
 		return false;
 	}
 	
+	@Override
+	public boolean readEmpty(ParseContext context) {
+		return false;
+	}
 	public char getExpectedRightPart() {
 		int idx = LEFT_CHARS.indexOf(left);
 		if(idx>0 && idx<RIGHT_CHARS.length()) {
