@@ -15,6 +15,7 @@ public class ListGrammarNode implements GrammarNode {
 	
 	boolean readPading = false;
 
+
 	public ListGrammarNode(Class<?> componentClass) {
 		this.componentClass = componentClass;
 	}
@@ -25,12 +26,18 @@ public class ListGrammarNode implements GrammarNode {
 		
 		ListGrammarNodeParseStatus status = (ListGrammarNodeParseStatus) _status;
 		
-		
 		GrammarNode node = null;
+		ParseStatus compoentStatu = null;
+		
 		if(status.currentComponent==null) {
 			node = context.createGrammarNodeForClass(componentClass);
+			compoentStatu = node.start(context);
 		}
 		
+		if(compoentStatu.isSuccess() && repeat.canHaveMore(context)) {
+			
+			context.addBranch();
+		}
 		
 		
 		boolean success = node.read(context, status, c);
