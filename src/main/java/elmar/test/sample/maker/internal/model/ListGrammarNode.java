@@ -2,6 +2,7 @@ package elmar.test.sample.maker.internal.model;
 
 import elmar.test.sample.maker.GrammarNode;
 import elmar.test.sample.maker.ParseContext;
+import elmar.test.sample.maker.ParseStatus;
 import elmar.test.sample.maker.parser.composite.Repeat;
 
 public class ListGrammarNode implements GrammarNode {
@@ -11,6 +12,7 @@ public class ListGrammarNode implements GrammarNode {
 	private GrammarNode padding;
 
 	private Repeat repeat;
+	
 	boolean readPading = false;
 
 	public ListGrammarNode(Class<?> componentClass) {
@@ -18,13 +20,29 @@ public class ListGrammarNode implements GrammarNode {
 	}
 
 	@Override
-	public boolean read(ParseContext context, char c) {
-		GrammarNode node = context.createGrammarNodeForClass(componentClass);
-
-		boolean read = node.read(context, c);
-		if(read) {
-			
+	public boolean read(ParseContext context, ParseStatus _status, char c) {
+		
+		
+		ListGrammarNodeParseStatus status = (ListGrammarNodeParseStatus) _status;
+		
+		
+		GrammarNode node = null;
+		if(status.currentComponent==null) {
+			node = context.createGrammarNodeForClass(componentClass);
 		}
+		
+		
+		
+		boolean success = node.read(context, status, c);
+		
+		status.setNode(node);
+		status.setReadEnd(context.getPos());
+		
+		
+		if(success) {
+			return true;
+		}
+		
 		return false;
 	}
 
@@ -40,10 +58,14 @@ public class ListGrammarNode implements GrammarNode {
 	public void setRepeat(Repeat repeat) {
 		this.repeat = repeat;
 	}
+	
+	static class ListGrammarNodeParseStatus extends ParseStatus {
+		GrammarNode currentComponent;
+		
+	}
 
-	public static void main(String[] args) {
-		char c = (char) -1;
-		char b = (char) 0xff;
-		System.out.println(c == b);
+	@Override
+	public  ParseStatus start(ParseContext context) {
+		return new ListGrammarNodeParseStatus();
 	}
 }
