@@ -16,21 +16,16 @@ public class ParseContext {
 	private String content;
 
 	Map<String, Object> variables = new HashMap<String, Object>();
-    private Stack<ParseElement> parseStatck = new Stack<ParseElement>();
+    private Stack<ParseStatus> parseStatck = new Stack<ParseStatus>();
     private int slibingIdx;
-    private ParseElement lastPoppedElement;
+    private ParseStatus childStatus;
 
 	public ParseContext(String content) {
 		this.content = content;
 
 	}
 
-	public ParseElement popParseElement() {
-		if (!parseStatck.isEmpty()) {
-			return parseStatck.peek();
-		}
-		return null;
-	}
+	
 
 	public int getInt(String identNumOfSpace, int def) {
 		Object oVal = variables.get(identNumOfSpace);
@@ -69,11 +64,7 @@ public class ParseContext {
 		pos -= amount;
 	}
 
-	public void pushParseElemet(ParseElement element) {
-		parseStatck.add(element);
-	}
-
-    public ParseResult<?> getLastResult() {
+    public ParseResult getChildResult() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -94,6 +85,24 @@ public class ParseContext {
 
 	public GrammarNode createGrammarNodeForClass(Class<?> componentClass) {
 		return null;
+	}
+
+	public void addBranch(ParseStatus start) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	public void pushNode(GrammarNode node) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	public void pop(ParseResult result) {
+		
 	}
 
 }

@@ -25,7 +25,7 @@ public class ParseElement {
 
     private Repeat repeat;
 
-    private ParseResult<?> result;
+    private ParseResult result;
 
     private boolean lastAttempFailed;
 

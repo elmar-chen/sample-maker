@@ -9,4 +9,14 @@ public abstract class Repeat {
     public static final int MUST_NOT_HAVE = 2;
 
 	public abstract boolean canHaveMore(ParseContext context);
+
+	public boolean canFinish(ParseContext context) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean minimalMet() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

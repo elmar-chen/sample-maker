@@ -1,23 +1,23 @@
 package elmar.test.sample.maker.internal.model;
 
-import elmar.test.sample.maker.GrammarNode;
 import elmar.test.sample.maker.ParseContext;
-import elmar.test.sample.maker.ParseStatus;
 
-public class WrapperRightPartGrammarNode implements GrammarNode{
+public class WrapperRightPartGrammarNode extends LexerGrammarNode{
+	
+	
 	private WrapperLeftPartGrammarNode leftNode;
 
 	@Override
-	public boolean read(ParseContext context, ParseStatus status, char c) {
-		return leftNode.getExpectedRightPart() == c;
-	}
-	@Override
-	public boolean readEmpty(ParseContext context) {
+	public boolean read(ParseContext context, char c) {
+		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
-	public ParseStatus start(ParseContext context) {
+	public boolean readEmpty(ParseContext context) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
+
+	
 }

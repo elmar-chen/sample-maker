@@ -23,7 +23,7 @@ public class FieldParseElement {
 
 	private Repeat repeat;
 
-	private ParseResult<?> result;
+	private ParseResult result;
 
 	
 	public static FieldParseElement from(Field field) throws ParseException {

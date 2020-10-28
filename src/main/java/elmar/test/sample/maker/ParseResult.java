@@ -1,9 +1,23 @@
 package elmar.test.sample.maker;
 
-import lombok.Data;
+public enum ParseResult {
 
-@Data
-public class ParseResult<T> {
-    private boolean success;
-    private T object;
+	SUCCESS_CONTINUE(true, false), SUCCESS_STOP(true, true), FAIL_CONTINUE(false, false), FAIL_STOP(false, true);
+
+	private boolean success;
+	private boolean stop;
+
+	private ParseResult(boolean success, boolean stop) {
+		this.success = success;
+		this.stop = stop;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public boolean isStop() {
+		return stop;
+	}
+
 }

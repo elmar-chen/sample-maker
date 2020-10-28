@@ -35,7 +35,7 @@ public class Main {
         List<ParseElement> childElements = root.getChildElements();
 
         System.out.println(childElements);
-        context.pushParseElemet(root);
+//        context.pushParseElemet(root);
         doPrase(context);
 
     }
@@ -55,35 +55,35 @@ public class Main {
 	}
 
 	static void doPrase(ParseContext context) throws ParseException {
-        while (true) {
-            ParseElement currentElement = context.popParseElement();
-            boolean shouldHaveMore = currentElement.shouldHaveMore(context);
-            if (shouldHaveMore) {
-                if (currentElement instanceof LexerParseElement<?>) {
-                    LexerParseElement<?> lexerParseElement = (LexerParseElement<?>) currentElement;
-                    String text = lexerParseElement.getLexer().readText(context);
-                    if (text == null) {
-                        currentElement.fail();
-                    } else {
-                        currentElement.addResult(text);
-                    }
-                } else {
-                    List<ParseElement> childs = currentElement.getChildElements();
-                    context.pushParseElemet(childs.get(0));
-                }
-            } else {
-                if (currentElement.minimalMet()) {
-                    ParseElement slibing = currentElement.getSlibing();
-                    if (slibing != null) {
-                        context.pushParseElemet(slibing);
-                    } else {
-                        // do nothing, parent is on top of stack;
-                    }
-                } else {
-                    currentElement.fail();
-                }
-            }
-        }
+//        while (true) {
+////            ParseElement currentElement = context.popParseElement();
+//            boolean shouldHaveMore = currentElement.shouldHaveMore(context);
+//            if (shouldHaveMore) {
+//                if (currentElement instanceof LexerParseElement<?>) {
+//                    LexerParseElement<?> lexerParseElement = (LexerParseElement<?>) currentElement;
+//                    String text = lexerParseElement.getLexer().readText(context);
+//                    if (text == null) {
+//                        currentElement.fail();
+//                    } else {
+//                        currentElement.addResult(text);
+//                    }
+//                } else {
+//                    List<ParseElement> childs = currentElement.getChildElements();
+//                    context.pushParseElemet(childs.get(0));
+//                }
+//            } else {
+//                if (currentElement.minimalMet()) {
+//                    ParseElement slibing = currentElement.getSlibing();
+//                    if (slibing != null) {
+//                        context.pushParseElemet(slibing);
+//                    } else {
+//                        // do nothing, parent is on top of stack;
+//                    }
+//                } else {
+//                    currentElement.fail();
+//                }
+//            }
+//        }
 
     }
 
