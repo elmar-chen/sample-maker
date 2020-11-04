@@ -101,7 +101,7 @@ public class ParseContext {
 
 
 
-	public void pop(ParseResult result) {
+	public void pop(boolean result) {
 		
 	}
 

@@ -1,6 +1,7 @@
 package elmar.test.sample.maker.internal.model;
 
 import elmar.test.sample.maker.GrammarNode;
+import elmar.test.sample.maker.ParseContext;
 import elmar.test.sample.maker.parser.composite.Repeat;
 
 public class ListGrammarNode extends SequenceGrammarNode {
@@ -10,23 +11,23 @@ public class ListGrammarNode extends SequenceGrammarNode {
 	private GrammarNode padding;
 
 	private Repeat repeat;
-	
+
 	boolean wasReadPadding = false;
-	
+
 	@Override
-	public GrammarNode getNextChild() {
-		if(!wasReadPadding) {
+	public GrammarNode getNextChild(ParseContext context) {
+		if (!wasReadPadding) {
 			return padding;
 		}
-		if(repeat.minimalMet()) {
-			
+		if (repeat.minimalMet()) {
+
 		}
 		return null;
 	}
 
-
-
-	
-
+	@Override
+	public boolean hasEnoughChild(ParseContext context) {
+		return !wasReadPadding && repeat.minimalMet();
+	}
 
 }

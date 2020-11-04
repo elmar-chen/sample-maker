@@ -12,7 +12,7 @@ public abstract class LexerGrammarNode implements GrammarNode{
 	boolean emptyTried;
 	
 	@Override
-	public void process(ParseContext context) {
+	public void advance(ParseContext context) {
 	}
 	
 }

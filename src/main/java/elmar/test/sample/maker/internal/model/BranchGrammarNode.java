@@ -6,7 +6,7 @@ import elmar.test.sample.maker.GrammarNode;
 import elmar.test.sample.maker.ParseContext;
 import elmar.test.sample.maker.ParseResult;
 
-public abstract class SequenceGrammarNode extends BaseGrammarNode {
+public abstract class BranchGrammarNode extends BaseGrammarNode {
 
 	Stack<GrammarNode> processedChild = new Stack<>();
 	boolean emptyTried = false;
@@ -14,8 +14,6 @@ public abstract class SequenceGrammarNode extends BaseGrammarNode {
 	@Override
 	public void advance(ParseContext context) {
 
-		
-		
 
 		ParseResult childResult = context.getChildResult();
 		if (childResult != null && !childResult.isSuccess()) {
